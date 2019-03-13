@@ -203,12 +203,6 @@ ol {
     margin: 20px auto 0px;
 }
 
-.center-block {
-    display: block;
-    margin-right: auto;
-    margin-left: auto;
-}
-
 
 /* --  Input  -- */
 
@@ -271,7 +265,7 @@ textarea:focus {
 }
 
 a.main-btn {
-    color: rgb(0, 0, 0);
+    color: #000000;
 }
 
 .white-btn {
@@ -713,6 +707,87 @@ header {
 /*------------------------------------*\
 	Portfolio
 \*------------------------------------*/
+
+
+/* Portfolio
+---------------------------------*/
+
+.Portfolio-nav {
+    padding: 0;
+    margin: 0 0 45px 0;
+    list-style: none;
+    text-align: center;
+}
+
+.Portfolio-nav li {
+    margin: 0 10px;
+    display: inline;
+}
+
+.Portfolio-nav li a {
+    display: inline-block;
+    padding: 10px 22px;
+    font-size: 12px;
+    line-height: 20px;
+    color: #222222;
+    border-radius: 4px;
+    text-transform: uppercase;
+    font-family: 'Montserrat', sans-serif;
+    background: #f7f7f7;
+    margin-bottom: 5px;
+    transition: all 0.3s ease-in-out;
+    -moz-transition: all 0.3s ease-in-out;
+    -webkit-transition: all 0.3s ease-in-out;
+}
+
+.Portfolio-nav li a:hover {
+    background: #6195FF;
+    color: #fff;
+    text-decoration: none;
+}
+
+.Portfolio-box {
+    text-align: center;
+    margin-bottom: 30px;
+    height: 350px;
+    width: 350px;
+    overflow: hidden;
+    float: left;
+    padding: 0;
+}
+
+.Portfolio-box img {
+    margin-bottom: 25px;
+    transition: all 0.3s ease-in-out;
+    -moz-transition: all 0.3s ease-in-out;
+    -webkit-transition: all 0.3s ease-in-out;
+}
+
+.Portfolio-box img:hover {
+    opacity: 0.6;
+}
+
+.Portfolio-nav li a.current {
+    background: #6195FF;
+    color: #fff;
+    text-decoration: none;
+}
+
+
+/* no transition on .isotope container */
+
+.isotope .isotope-item {
+    /* change duration value to whatever you like */
+    -webkit-transition-duration: 0.6s;
+    -moz-transition-duration: 0.6s;
+    transition-duration: 0.6s;
+}
+
+.isotope .isotope-item {
+    -webkit-transition-property: -webkit-transform, opacity;
+    -moz-transition-property: -moz-transform, opacity;
+    transition-property: transform, opacity;
+}
 
 .work {
     position: relative;

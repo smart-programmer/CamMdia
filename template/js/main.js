@@ -99,3 +99,20 @@
     });
 
 })(jQuery);
+
+///////////////////////////
+// Fillter
+$(window).load(function() {
+    var $container = $('.portfolioContainer');
+    $('.portfolioFilter a').click(function() {
+        $('.portfolioFilter .current').removeClass('current');
+        $(this).addClass('current');
+        var selector = $(this).attr('data-filter');
+        $container.isotope({
+
+            filter: selector,
+        });
+        return true;
+    });
+
+});
