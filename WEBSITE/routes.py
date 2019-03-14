@@ -1,9 +1,12 @@
-from flask import Flask, render_template, url_for
-app = Flask(__name__)
+from flask import Flask, request, redirect, render_template, url_for
+from WEBSITE import app
+from WEBSITE.forms import MessageForm, LoginForm, UploadImage
+import secrets
 
 @app.route('/', methods=['GET', 'POST'])
 def home():
-    return render_template('index.html')
+    form = MessageForm()
+    return render_template('index.html', form=form)
 
 @app.route('/images', methods=['GET', 'POST'])
 def images():
@@ -15,11 +18,13 @@ def admin():
 
 @app.route('/admin/login', methods=['GET', 'POST'])
 def login():
-    return render_template('login.html')
+    form = LoginForm()
+    return render_template('login.html', form=form)
 
 @app.route('/admin/uploadImage', methods=['GET', 'POST'])
 def uploadImage():
-    return render_template('upload_image.html')
+    form = UploadImage()
+    return render_template('upload_image.html', form=form)
 
 @app.route('/admin/messages')
 def messages():
@@ -33,5 +38,3 @@ def deleted_messages():
 def done_messages():
     return render_template('done_messages.html')  
 
-if __name__ == '__main__':
-    app.run(debug=True)

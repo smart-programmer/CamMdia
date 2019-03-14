@@ -19,15 +19,18 @@
                     <h2 class="text-center"><img src="https://bootdey.com/img/Content/avatar/avatar1.png" class="img-circle"><br>Login</h2>
                 </div>
                 <div class="modal-body">
-                    <form class="form col-md-12 center-block">
+                    <form class="form col-md-12 center-block" action="" method="POST">
+                        {{ form.hidden_tag() }}
                         <div class="form-group">
-                            <input type="email" class="form-control input-lg" placeholder="Email">
+                            {{ form.email(class="form-control input-lg", placeholder="Email") }} {% for error in form.email.errors %}
+                            <span id="helpBlock" class="help-block">{{ error }}</span> {% endfor %}
                         </div>
                         <div class="form-group">
-                            <input type="password" class="form-control input-lg" placeholder="Password">
+                            {{ form.password(class="form-control input-lg", placeholder="Password") }} {% for error in form.password.errors %}
+                            <span id="helpBlock" class="help-block">{{ error }}</span> {% endfor %}
                         </div>
                         <div class="form-group">
-                            <button class="btn btn-primary btn-lg btn-block">Sign In</button>
+                            {{ form.submit(class="btn btn-primary btn-lg btn-block") }}
                         </div>
                     </form>
                 </div>
