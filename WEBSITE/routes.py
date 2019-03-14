@@ -1,6 +1,6 @@
 from flask import Flask, request, redirect, render_template, url_for
 from WEBSITE import app
-from WEBSITE.forms import MessageForm, LoginForm, UploadImage
+from WEBSITE.forms import MessageForm, LoginForm, UploadImage, UploadTestimonial
 import secrets
 
 @app.route('/', methods=['GET', 'POST'])
@@ -25,6 +25,13 @@ def login():
 def uploadImage():
     form = UploadImage()
     return render_template('upload_image.html', form=form)
+
+
+@app.route('/admin/uploadTestimonial', methods=['GET', 'POST'])
+def uploadTestimonial():
+    form = UploadTestimonial()
+    return render_template('upload_testimonial.html', form=form)
+
 
 @app.route('/admin/messages')
 def messages():

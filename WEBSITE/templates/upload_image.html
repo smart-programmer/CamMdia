@@ -1,122 +1,58 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="utf-8">
-
-    <title>رفع صورة</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
-
-</head>
-
-<body>
-    <!-- Header -->
-    <div id="top-nav" class="navbar navbar-inverse navbar-static-top">
-        <div class="container bootstrap snippet">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-toggle"></span>
-                </button>
-                <a class="navbar-brand" href="#">Cam Media - كام ميديا</a>
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav navbar-left">
-                    <li><a href="#"><i class="glyphicon glyphicon-lock"></i> الرئيسة</a></li>
-
-                </ul>
-                <ul class="nav navbar-nav navbar-right">
-                    <li class="dropdown">
-                        <a class="dropdown-toggle" role="button" data-toggle="dropdown" href="#">
-                            <i class="glyphicon glyphicon-user"></i> Admin <span class="caret"></span></a>
-                        <ul id="g-account-menu" class="dropdown-menu" role="menu">
-                            <li><a href="#"><i class="glyphicon glyphicon-lock"></i> تسجيل الخروج</a></li>
-                        </ul>
-                    </li>
-                </ul>
+ {% extends "layouts/_uploadLayout.html" %} {% block content %}
+<div class="container ">
+    <h1 class="text-primary">إضافة صورة أخرى <span class="glyphicon glyphicon-user"></span></h1>
+    <hr>
+    <div class="row">
+        <!-- left column -->
+        <div class="col-md-3 col-xs-6">
+            <div class="text-center">
+                <img src="https://placehold.it/100" class="avatar img-circle img-responsive" alt="avatar">
+                <h3>إرفع صورة أخرى</h3>
+                <h4>600 * 600 يفضل</h4>
+                <input type="file" class="form-control" onchange="previewFile()">
             </div>
         </div>
-        <!-- /container -->
+
+        <!-- edit form column -->
+        <div class="col-md-9 personal-info">
+
+            <h3>بيانات الصورة </h3>
+
+            <form class="form-horizontal" role="form" action="" method="POST">
+                {{ form.hidden_tag() }}
+
+                <div class="form-group">
+                    <div class="col-lg-8">
+                        {{ form.title(class="form-control", placeholder="logo for company...") }} {% for error in form.title.errors %}
+                        <span id="helpBlock" class="help-block">{{ error }}</span> {% endfor %}
+                    </div>
+                    <label class="col-lg-3 control-label">عنوان الصورة</label>
+                </div>
+                <div class="form-group">
+                    <div class="col-lg-8">
+                        {{ form.description(class="form-control", placeholder="this phot for this company bla bla ...") }} {% for error in form.description.errors %}
+                        <span id="helpBlock" class="help-block">{{ error }}</span> {% endfor %}
+                    </div>
+                    <label class="col-lg-3 control-label">وصف بسيط</label>
+                </div>
+                <div class="form-group">
+                    <div class="col-lg-8">
+                        {{ form.url(class="form-control", placeholder="https://www.example.com") }} {% for error in form.url.errors %}
+                        <span id="helpBlock" class="help-block">{{ error }}</span> {% endfor %}
+                    </div>
+                    <label class="col-lg-3 control-label">رابط للمشروع <span style="font-size:10px;">**إختياري</span></label>
+                </div>
+                <div class="form-group">
+                    <div class="col-lg-8">
+                        {{ form.filters(class="form-control") }}
+                    </div>
+                    <div class="form-group">
+                        <div class="text-center">
+                            {{ form.submit(class="btn btn-primary btn-lg") }}
+                        </div>
+                    </div>
+            </form>
+            </div>
+        </div>
     </div>
-    <!-- /Header -->
-    <div class="container ">
-        <h1 class="text-primary">إضافة صورة أخرى <span class="glyphicon glyphicon-user"></span></h1>
-        <hr>
-        <div class="row">
-            <!-- left column -->
-            <div class="col-md-3 col-xs-6">
-                <div class="text-center">
-                    <img src="https://placehold.it/100" class="avatar img-circle img-responsive" alt="avatar">
-                    <h3>إرفع صورة أخرى</h3>
-                    <h4>600 * 600 يفضل</h4>
-                    <input type="file" class="form-control" onchange="previewFile()">
-                </div>
-            </div>
-
-            <!-- edit form column -->
-            <div class="col-md-9 personal-info">
-
-                <h3>بيانات الصورة </h3>
-
-                <form class="form-horizontal" role="form" action="" method="POST">
-                    {{ form.hidden_tag() }}
-
-                    <div class="form-group">
-                        <div class="col-lg-8">
-                            {{ form.title(class="form-control", placeholder="logo for company...") }} {% for error in form.title.errors %}
-                            <span id="helpBlock" class="help-block">{{ error }}</span> {% endfor %}
-                        </div>
-                        <label class="col-lg-3 control-label">عنوان الصورة</label>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-lg-8">
-                            {{ form.description(class="form-control", placeholder="this phot for this company bla bla ...") }} {% for error in form.description.errors %}
-                            <span id="helpBlock" class="help-block">{{ error }}</span> {% endfor %}
-                        </div>
-                        <label class="col-lg-3 control-label">وصف بسيط</label>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-lg-8">
-                            {{ form.url(class="form-control", placeholder="https://www.example.com") }} {% for error in form.url.errors %}
-                            <span id="helpBlock" class="help-block">{{ error }}</span> {% endfor %}
-                        </div>
-                        <label class="col-lg-3 control-label">رابط للمشروع <span style="font-size:10px;">**إختياري</span></label>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-lg-8">
-                            {{ form.filters(class="form-control") }}
-                        </div>
-                        <div class="form-group">
-                            <div class="text-center">
-                                {{ form.submit(class="btn btn-primary btn-lg") }}
-                            </div>
-                        </div>
-                </form>
-                </div>
-            </div>
-        </div>
-        <hr>
-
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-        <script>
-            function previewFile() {
-                var preview = document.querySelector('img'); //selects the query named img
-                var file = document.querySelector('input[type=file]').files[0]; //sames as here
-                var reader = new FileReader();
-
-                reader.onloadend = function() {
-                    preview.src = reader.result;
-                }
-
-                if (file) {
-                    reader.readAsDataURL(file); //reads the data as a URL
-                } else {
-                    preview.src = "https://placehold.it/600/600";
-                }
-            }
-            previewFile(); //calls the function named previewFile()
-        </script>
-</body>
-
-</html>
+    {% endblock %}

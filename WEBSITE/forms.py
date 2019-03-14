@@ -40,3 +40,14 @@ class UploadImage(FlaskForm):
     filters = SelectField("التصنيف", choices=subFilters,
                           validators=[DataRequired()])
     submit = wtforms.SubmitField("أرفع")
+
+
+class UploadTestimonial(FlaskForm):
+    name = wtforms.StringField(" اسم العمييل ", validators=[
+                                DataRequired(), length(min=3, max=255)])
+    work = wtforms.StringField("  طبيعة عمله ", validators=[
+        DataRequired(), length(min=3, max=255)])
+    description = wtforms.StringField("   ماقله العمييل ", validators=[
+        length(min=3, max=500)])
+
+    submit = wtforms.SubmitField("أرفع")
