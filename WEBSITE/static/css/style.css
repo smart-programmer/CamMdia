@@ -204,47 +204,6 @@ ol {
 }
 
 
-/* --  Input  -- */
-
-input[type="text"],
-input[type="email"],
-input[type="password"],
-input[type="number"],
-input[type="date"],
-input[type="url"],
-input[type="tel"],
-textarea {
-    height: 40px;
-    width: 100%;
-    border: none;
-    background: #F4F4F4;
-    border-bottom: 2px solid #EEE;
-    color: #354052;
-    padding: 0px 10px;
-    opacity: 0.5;
-    -webkit-transition: 0.2s border-color, 0.2s opacity;
-    transition: 0.2s border-color, 0.2s opacity;
-}
-
-textarea {
-    padding: 10px 10px;
-    min-height: 80px;
-    resize: vertical;
-}
-
-input[type="text"]:focus,
-input[type="email"]:focus,
-input[type="password"]:focus,
-input[type="number"]:focus,
-input[type="date"]:focus,
-input[type="url"]:focus,
-input[type="tel"]:focus,
-textarea:focus {
-    border-color: #6195FF;
-    opacity: 1;
-}
-
-
 /* --  Buttons  -- */
 
 .main-btn,

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>رد على الرسائل</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/reply.css') }}">
+</head>
+
+<body>
+    <div id="form-main">
+        <div id="form-div">
+            <form class="form" id="form1">
+            {{ form.hidden_tag() }}
+                <p class="name">
+                {{ form.subject(class="validate[required,custom[onlyLetter],length[0,100]] feedback-input", placeholder="subject") }} {% for error in form.subject.errors %}
+                            <span id="helpBlock" class="help-block">{{ error }}</span> {% endfor %}
+                </p>
+                <p class="message">
+                {{ form.email(class="validate[required,custom[email]] feedback-input", placeholder="email") }} {% for error in form.email.errors %}
+                            <span id="helpBlock" class="help-block">{{ error }}</span> {% endfor %}
+                </p>
+                <p class="text">
+                {{ form.message(class="validate[required,length[6,300]] feedback-input", placeholder="message") }} {% for error in form.message.errors %}
+                            <span id="helpBlock" class="help-block">{{ error }}</span> {% endfor %}
+                </p>
+                <div class="submit">
+                {{ form.submit(class="blue-button") }}
+                    <div class="ease"></div>
+                </div>
+            </form>
+        </div>
+</body>
+
+</html>

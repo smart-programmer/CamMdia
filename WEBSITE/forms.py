@@ -44,10 +44,20 @@ class UploadImage(FlaskForm):
 
 class UploadTestimonial(FlaskForm):
     name = wtforms.StringField(" اسم العمييل ", validators=[
-                                DataRequired(), length(min=3, max=255)])
+        DataRequired(), length(min=3, max=255)])
     work = wtforms.StringField("  طبيعة عمله ", validators=[
         DataRequired(), length(min=3, max=255)])
     description = wtforms.StringField("   ماقله العمييل ", validators=[
         length(min=3, max=500)])
 
     submit = wtforms.SubmitField("أرفع")
+
+
+class ReplyForm(FlaskForm):
+    subject = wtforms.StringField("عنون الرسالة", validators=[
+        length(max=255)])
+    email = wtforms.StringField("البريد الإلكتروني", validators=[
+        Email(), DataRequired(), length(max=255)])
+    message = wtforms.TextAreaField("نص الرسالة ", validators=[
+                                    DataRequired(), length(max=1000)])
+    submit = wtforms.SubmitField("أرسل")

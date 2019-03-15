@@ -51,16 +51,16 @@
                 <hr>
 
                 <ul class="nav nav-pills nav-stacked">
-                    <i class="glyphicon glyphicon-pencil"></i> <span>الصور</span>
+                    <i class="glyphicon glyphicon-picture"></i> <span>الصور</span>
                     <li><a href="#"><i class="glyphicon glyphicon-plus"></i> إضافة صورة</a></li>
                     <li><a href="#"><i class="glyphicon glyphicon-pencil"></i> تعديل على الصور</a></li>
-                    <li><i class="glyphicon glyphicon-pencil"></i> <span>الرسائل</span>
+                    <li><i class="glyphicon glyphicon-envelope"></i> <span>الرسائل</span>
                         <ul class="nav nav-pills nav-stacked">
                             <li><a href="#"><i class="glyphicon glyphicon-plus"></i> كافة الرسائل </a></li>
                             <li><a href="#"><i class="glyphicon glyphicon-pencil"></i> الرسائل المقروؤة</a></li>
                         </ul>
                     </li>
-                    <li><i class="glyphicon glyphicon-pencil"></i> <span>توصيات العملاء</span>
+                    <li><i class="glyphicon glyphicon-thumbs-up"></i> <span>توصيات العملاء</span>
                         <ul class="nav nav-pills nav-stacked">
                             <li><a href="#"><i class="glyphicon glyphicon-plus"></i> إضافة التوصيات </a></li>
                             <li><a href="#"><i class="glyphicon glyphicon-pencil"></i> تعديل على التوصيات </a></li>
@@ -79,14 +79,14 @@
                 <div class="row">
                     <!-- center left-->
                     <div class="col-md-7">
-                        <a href="https://www.google.com">
-                            <div class="well">صندوق الرسائل <span class="badge pull-right">"{{9}}"</span></div>
+                        <a href="{{ url_for('messages') }}" class="btn btn-block">
+                            <div class="well"> صندوق الرسائل <span class="badge pull-right">"{{9}}"</span></div>
                         </a>
 
                         <hr>
 
                         <div class="panel panel-default">
-                            <div class="panel-heading">
+                            <div class="panel-heading text-center">
                                 <h3>عدد زوار الموقع</h3>
                             </div>
                             <div class="panel-body">
