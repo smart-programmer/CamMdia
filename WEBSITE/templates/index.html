@@ -636,7 +636,7 @@
                     {{ form.hidden_tag() }} {{ form.full_name(class="input", placeholder="الاسم")}} {% for error in form.full_name.errors %}
                     <span id="helpBlock" class="help-block">{{ error }}</span> {% endfor %} {{ form.email(class="input", placeholder="البريد الإلكتروني")}} {% for error in form.email.errors %}
                     <span id="helpBlock" class="help-block">{{ error }}</span> {% endfor %} {{ form.subject(class="input", placeholder="الموضوع")}} {% for error in form.subject.errors %}
-                    <span id="helpBlock" class="help-block">{{ error }}</span> {% endfor %} {{ form.message(class="input", placeholder="نص الرسالة...")}} {% for error in form.message.errors %}
+                    <span id="helpBlock" class="help-block">{{ error }}</span> {% endfor %} {{ form.content(class="input", placeholder="نص الرسالة...")}} {% for error in form.content.errors %}
                     <span id="helpBlock" class="help-block">{{ error }}</span> {% endfor %} {{ form.submit(class="main-btn")}}
                 </form>
             </div>

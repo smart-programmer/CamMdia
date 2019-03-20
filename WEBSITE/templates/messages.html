@@ -1,11 +1,13 @@
 {% extends "layouts/_praivteLayout.html" %} {% block title %}
 <title> كافة الرسائل</title>{% endblock %} {% block content %}
 <div class="row">
+    {% for message in paginate_object.items %}
+
     <div class="col-md-8 mx-auto" style="margin-top:2%;">
 
         <div class="card">
             <h5 class="card-header">
-                Card title
+                {{ message.subject }}
                 <div class="btn-group float-right" role="group">
                     <button class="btn btn-primary" type="button">Left</button>
                     <button class="btn btn-warning" type="button">Left</button>
@@ -14,7 +16,7 @@
             </h5>
             <div class="card-body">
                 <p class="card-text">
-                    Card content
+                    {{ message.email }} {{ message.content }}
                 </p>
             </div>
             <div class="card-footer">
@@ -22,5 +24,7 @@
             </div>
         </div>
     </div>
+    {% endfor %}
+
 </div>
 {% endblock %}

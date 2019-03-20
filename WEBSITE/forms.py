@@ -19,7 +19,7 @@ class MessageForm(FlaskForm):
                                 Email(), DataRequired(), length(max=255)])
     subject = wtforms.StringField("عنوان الرسالة", validators=[
                                   length(min=3, max=255)])
-    message = wtforms.TextAreaField("نص الرسالة ", validators=[
+    content = wtforms.TextAreaField("نص الرسالة ", validators=[
                                     DataRequired(), length(max=1000)])
     submit = wtforms.SubmitField("أرسل")
 

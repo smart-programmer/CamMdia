@@ -1,11 +1,21 @@
 from flask import Flask, request, redirect, render_template, url_for
-from WEBSITE import app
+from WEBSITE import app, db, bcrypt, mail
 from WEBSITE.forms import MessageForm, LoginForm, UploadImage, UploadTestimonial, ReplyForm
-import secrets
+from WEBSITE import errors
+from WEBSITE.models import Message
 
 @app.route('/', methods=['GET', 'POST'])
 def home():
     form = MessageForm()
+    if form.validate_on_submit():
+        full_name = form.full_name.data
+        email = form.email.data
+        content = form.content.data
+        subject = form.subject.data
+        message = Message(full_name=full_name, email=email,
+                          content=content, subject=subject)
+        db.session.add(message)
+        db.session.commit()
     return render_template('index.html', form=form)
 
 @app.route('/images', methods=['GET', 'POST'])
@@ -44,7 +54,9 @@ def all_testimonial():
 
 @app.route('/admin/messages')
 def messages():
-    return render_template('messages.html')
+    page = request.args.get("page", 1, type=int)
+    paginate_object = Message.query.filter().paginate(page=int(page), per_page=5)
+    return render_template('messages.html', paginate_object=paginate_object)
 
 @app.route('/admin/deleted_messages')
 def deleted_messages():

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>{{ error }} - {{ heading }}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="{{ url_for('static', filename='css/errors/error.css') }}">
+</head>
+
+<body>
+    <div class="error-container">
+        <div class="background-animation">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+        <div class="error">
+            <div class="error-heading">
+                <h1>{{ error }}</h1>
+            </div>
+            <h2>{{ heading }}</h2>
+            <p>{{ paragraph }}</p>
+            <a href="{{ url_for('home') }}">Home Page</a>
+        </div>
+    </div>
+
+</body>
+
+</html>
