@@ -8,3 +8,27 @@ class Message(db.Model):
     subject = db.Column(db.String(255), unique=False, nullable=True)
     email = db.Column(db.String(255), unique=False, nullable=False)
     content = db.Column(db.String(1000), unique=False, nullable=False)
+
+
+
+class Post(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    image_string = db.Column(db.String(100), unique=True, nullable=True, default="default.jpg")
+    category = db.Column(db.String(20), nullable=False)
+    post_title = db.Column(db.String(255), nullable=False)
+    post_description = db.Column(db.String(600), nullable=True)
+    project_link = db.Column(db.String(255), nullable=True)
+    post_date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+
+
+    def __repr__():
+        return f"{self.category}{self.post_title}{self.image_string}"
+    
+
+
+#class User
+
+
+
+
+

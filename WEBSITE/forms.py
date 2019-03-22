@@ -2,6 +2,7 @@ from flask_wtf import FlaskForm
 import wtforms
 from wtforms.validators import DataRequired, length, Email
 from wtforms_components import SelectField
+from flask_wtf.file import FileField, FileAllowed 
 
 subFilters = (
     ("logos", "شعارات"),
@@ -31,19 +32,20 @@ class LoginForm(FlaskForm):
 
 
 class UploadImage(FlaskForm):
+    image = FileField("upload image", validators=[FileAllowed(["jpg", "png", "GIF", "jpeg"])])
     title = wtforms.StringField("عنوان الصورة ", validators=[
                                 DataRequired(), length(min=3, max=255)])
     description = wtforms.StringField(" وصف الصورة ", validators=[
         DataRequired(), length(min=3, max=255)])
     url = wtforms.StringField("  رابط للصورة ", validators=[
-        length(min=3, max=255)])
+        length(max=255)])
     filters = SelectField("التصنيف", choices=subFilters,
                           validators=[DataRequired()])
     submit = wtforms.SubmitField("أرفع")
 
 
 class UploadTestimonial(FlaskForm):
-    name = wtforms.StringField(" اسم العمييل ", validators=[
+    name = wtforms.StringField(" اسم العميل ", validators=[
         DataRequired(), length(min=3, max=255)])
     work = wtforms.StringField("  طبيعة عمله ", validators=[
         DataRequired(), length(min=3, max=255)])

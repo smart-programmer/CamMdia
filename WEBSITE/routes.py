@@ -2,7 +2,8 @@ from flask import Flask, request, redirect, render_template, url_for
 from WEBSITE import app, db, bcrypt, mail
 from WEBSITE.forms import MessageForm, LoginForm, UploadImage, UploadTestimonial, ReplyForm
 from WEBSITE import errors
-from WEBSITE.models import Message
+from WEBSITE.models import Message, Post
+from WEBSITE.utils import save_image
 
 @app.route('/', methods=['GET', 'POST'])
 def home():
@@ -18,9 +19,11 @@ def home():
         db.session.commit()
     return render_template('index.html', form=form)
 
-@app.route('/images', methods=['GET', 'POST'])
+@app.route('/images', methods=['GET'])
 def images():
-    return render_template('image_gallery.html')
+    path = url_for("static", filename="posts/images")
+    images = Post.query.all()
+    return render_template('image_gallery.html', path=path, images=images)
 
 @app.route('/admin')
 def admin():
@@ -34,6 +37,22 @@ def login():
 @app.route('/admin/uploadImage', methods=['GET', 'POST'])
 def uploadImage():
     form = UploadImage()
+    
+    if form.validate_on_submit():
+        title = form.title.data
+        description = form.description.data
+        category = form.filters.data
+        url = form.url.data
+        image_string = save_image(form.image.data, "static/posts/images")
+
+        post = Post(image_string=image_string, category=category, post_title=title,
+        post_description=description, project_link=url)
+
+        db.session.add(post)
+        db.session.commit()
+
+        return redirect(url_for('uploadImage'))
+
     return render_template('upload_image.html', form=form)
 
 
@@ -45,7 +64,9 @@ def uploadTestimonial():
 
 @app.route('/admin/all_images')
 def all_images():
-    return render_template('all_images.html')  
+    page = request.args.get("page", 1, type=int)
+    paginate_object = Post.query.paginate(page=int(page), per_page=15)
+    return render_template('all_images.html', paginate_object=paginate_object)  
 
 
 @app.route('/admin/all_testimonial')

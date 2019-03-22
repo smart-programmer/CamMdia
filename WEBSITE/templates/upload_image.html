@@ -4,21 +4,21 @@
     <hr>
     <div class="row">
         <!-- left column -->
-        <div class="col-md-3 col-xs-6">
+        <!-- <div class="col-md-3 col-xs-6">
             <div class="text-center">
                 <img src="https://placehold.it/100" class="img-circle img-responsive center-block upload" alt="avatar">
                 <h3>إرفع صورة أخرى</h3>
-                <h4>600 * 600 يفضل</h4>
+                <h4>سيتم قص الصورة تلقائيا لتصبح 600 * 600</h4>
                 <input type="file" class="form-control" onchange="previewFile()">
             </div>
-        </div>
+        </div> -->
 
         <!-- edit form column -->
         <div class="col-md-9 personal-info">
 
             <h3>بيانات الصورة </h3>
 
-            <form class="form-horizontal" role="form" action="" method="POST">
+            <form class="form-horizontal" role="form" action="" method="POST" enctype="multipart/form-data">
                 {{ form.hidden_tag() }}
 
                 <div class="form-group">
@@ -51,6 +51,16 @@
                             {{ form.submit(class="btn btn-primary btn-lg") }}
                         </div>
                     </div>
+
+                    <div class="col-md-3 col-xs-6">
+                            <div class="text-center">
+                                <img src="https://placehold.it/100" class="img-circle img-responsive center-block upload" alt="avatar">
+                                <h3>إرفع صورة أخرى</h3>
+                                <h4>سيتم قص الصورة تلقائيا لتصبح 600 * 600</h4>
+                                <!-- <input type="file" class="form-control" onchange="previewFile()"> -->
+                                {{ form.image(class='form-control') }}
+                            </div>
+                        </div>
             </form>
             </div>
         </div>
