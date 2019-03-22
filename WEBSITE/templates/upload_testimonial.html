@@ -4,30 +4,39 @@
     <hr>
     <div class="row">
         <!-- left column -->
-        <div class="col-md-3">
+        <!-- <div class="col-md-3">
             <div class="text-center">
                 <img src="https://placehold.it/70/70" class=" img-circle img-responsive center-block" alt="avatar">
                 <h3>إرفع صورة أخرى</h3>
                 <h4>70 * 70 يفضل</h4> <input type="file" class="form-control" onchange="previewFile()">
             </div>
-        </div>
+        </div> -->
         <!-- edit form column -->
-        <div class="col-md-9 personal-info">
+        <div class="col-md-12 personal-info">
             <h3>بيانات الصورة </h3>
             <form class="form-horizontal" role="form" action="" method="POST"> {{ form.hidden_tag() }}
-                <div class="form-group">
-                    <div class="col-lg-8"> {{ form.name(class="form-control", placeholder="فلان بن فلان") }} {% for error in form.name.errors %} <span id="helpBlock" class="help-block">{{ error }}</span> {% endfor %} </div> <label class="col-lg-3 control-label"> اسم العميل</label>
+                <div class="col-md-3">
+                    <div class="text-center">
+                        <img src="https://placehold.it/70/70" class=" img-circle img-responsive center-block" alt="avatar">
+                        <h3>إرفع صورة أخرى</h3>
+                        <h4>70 * 70 يفضل</h4> <input type="file" class="form-control" onchange="previewFile()">
+                    </div>
                 </div>
-                <div class="form-group">
-                    <div class="col-lg-8"> {{ form.work(class="form-control", placeholder="شركة دعاية") }} {% for error in form.work.errors %} <span id="helpBlock" class="help-block">{{ error }}</span> {% endfor %}
-                    </div> <label class="col-lg-3 control-label"> طبيعة عمله</label>
-                </div>
-                <div class="form-group">
-                    <div class="col-lg-8"> {{ form.description(class="form-control", placeholder="محمد أبو الخير إنسان مبدع يستحق التقدير") }} {% for error in form.description.errors %} <span id="helpBlock" class="help-block">{{
+                <div class="col-md-9">
+                    <div class="form-group">
+                        <div class="col-lg-8"> {{ form.name(class="form-control", placeholder="فلان بن فلان") }} {% for error in form.name.errors %} <span id="helpBlock" class="help-block">{{ error }}</span> {% endfor %} </div> <label class="col-lg-3 control-label"> اسم العميل</label>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-lg-8"> {{ form.work(class="form-control", placeholder="شركة دعاية") }} {% for error in form.work.errors %} <span id="helpBlock" class="help-block">{{ error }}</span> {% endfor %}
+                        </div> <label class="col-lg-3 control-label"> طبيعة عمله</label>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-lg-8"> {{ form.description(class="form-control", placeholder="محمد أبو الخير إنسان مبدع يستحق التقدير") }} {% for error in form.description.errors %} <span id="helpBlock" class="help-block">{{
                             error }}</span> {% endfor %} </div> <label class="col-lg-3 control-label"> توصيته</label>
-                </div>
-                <div class="form-group">
-                    <div class="text-center"> {{ form.submit(class="btn btn-primary btn-lg") }} </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="text-center"> {{ form.submit(class="btn btn-primary btn-lg") }} </div>
+                    </div>
                 </div>
             </form>
         </div>

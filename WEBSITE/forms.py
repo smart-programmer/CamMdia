@@ -26,7 +26,6 @@ class MessageForm(FlaskForm):
 
 
 class LoginForm(FlaskForm):
-    email = wtforms.StringField("البريد الإلكتروني")
     password = wtforms.StringField("الرقم السري")
     submit = wtforms.SubmitField("تسجيل الدخول")
 
@@ -49,7 +48,7 @@ class UploadTestimonial(FlaskForm):
         DataRequired(), length(min=3, max=255)])
     work = wtforms.StringField("  طبيعة عمله ", validators=[
         DataRequired(), length(min=3, max=255)])
-    description = wtforms.StringField("   ماقله العمييل ", validators=[
+    description = wtforms.StringField("   ماقله العميل ", validators=[
         length(min=3, max=500)])
 
     submit = wtforms.SubmitField("أرفع")
