@@ -13,7 +13,7 @@ class Message(db.Model):
 
 class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    image_string = db.Column(db.String(100), unique=True, nullable=True, default="default.jpg")
+    image_string = db.Column(db.String(100), unique=True, nullable=False)
     category = db.Column(db.String(20), nullable=False)
     post_title = db.Column(db.String(255), nullable=False)
     post_description = db.Column(db.String(600), nullable=True)
@@ -23,6 +23,10 @@ class Post(db.Model):
 
     def __repr__():
         return f"{self.category}{self.post_title}{self.image_string}"
+
+
+
+
     
 
 

@@ -138,96 +138,23 @@
                 <h2 class="title">بعض أعمالنا</h2>
             </div>
             <!-- /Section header -->
-
+    {% for image in images %}
             <!-- Work -->
             <div class="col-md-4 col-xs-6 work">
-                <img class="img-responsive" src="{{ url_for('static', filename='img/work1.jpg') }}" alt="">
+                <img class="img-responsive" src="{{ path }}/{{ image.image_string }}" alt="">
                 <div class="overlay"></div>
                 <div class="work-content">
                     <span>Category</span>
                     <h3>Lorem ipsum dolor</h3>
                     <div class="work-link">
                         <a href="#"><i class="fa fa-external-link"></i></a>
-                        <a class="lightbox" href="{{ url_for('static', filename='img/work1.jpg') }}"><i class="fa fa-search"></i></a>
+                        <a class="lightbox" href="{{ path }}/{{ image.image_string }}"><i class="fa fa-search"></i></a>
                     </div>
                 </div>
             </div>
             <!-- /Work -->
-
-            <!-- Work -->
-            <div class="col-md-4 col-xs-6 work">
-                <img class="img-responsive" src="{{ url_for('static', filename='img/work1.jpg') }}" alt="">
-                <div class="overlay"></div>
-                <div class="work-content">
-                    <span>Category</span>
-                    <h3>Lorem ipsum dolor</h3>
-                    <div class="work-link">
-                        <a href="#"><i class="fa fa-external-link"></i></a>
-                        <a class="lightbox" href="{{ url_for('static', filename='img/work1.jpg') }}"><i class="fa fa-search"></i></a>
-                    </div>
-                </div>
-            </div>
-            <!-- /Work -->
-
-            <!-- Work -->
-            <div class="col-md-4 col-xs-6 work">
-                <img class="img-responsive" src="{{ url_for('static', filename='img/work1.jpg') }}" alt="">
-                <div class="overlay"></div>
-                <div class="work-content">
-                    <span>Category</span>
-                    <h3>Lorem ipsum dolor</h3>
-                    <div class="work-link">
-                        <a href="#"><i class="fa fa-external-link"></i></a>
-                        <a class="lightbox" href="{{ url_for('static', filename='img/work1.jpg') }}"><i class="fa fa-search"></i></a>
-                    </div>
-                </div>
-            </div>
-            <!-- /Work -->
-
-            <!-- Work -->
-            <div class="col-md-4 col-xs-6 work">
-                <img class="img-responsive" src="{{ url_for('static', filename='img/work1.jpg') }}" alt="">
-                <div class="overlay"></div>
-                <div class="work-content">
-                    <span>Category</span>
-                    <h3>Lorem ipsum dolor</h3>
-                    <div class="work-link">
-                        <a href="#"><i class="fa fa-external-link"></i></a>
-                        <a class="lightbox" href="{{ url_for('static', filename='img/work1.jpg') }}"><i class="fa fa-search"></i></a>
-                    </div>
-                </div>
-            </div>
-            <!-- /Work -->
-
-            <!-- Work -->
-            <div class="col-md-4 col-xs-6 work">
-                <img class="img-responsive" src="{{ url_for('static', filename='img/work1.jpg') }}" alt="">
-                <div class="overlay"></div>
-                <div class="work-content">
-                    <span>Category</span>
-                    <h3>Lorem ipsum dolor</h3>
-                    <div class="work-link">
-                        <a href="#"><i class="fa fa-external-link"></i></a>
-                        <a class="lightbox" href="{{ url_for('static', filename='img/work1.jpg') }}"><i class="fa fa-search"></i></a>
-                    </div>
-                </div>
-            </div>
-            <!-- /Work -->
-
-            <!-- Work -->
-            <div class="col-md-4 col-xs-6 work">
-                <img class="img-responsive" src="{{ url_for('static', filename='img/work1.jpg') }}" alt="">
-                <div class="overlay"></div>
-                <div class="work-content">
-                    <span>Category</span>
-                    <h3>Lorem ipsum dolor</h3>
-                    <div class="work-link">
-                        <a href="#"><i class="fa fa-external-link"></i></a>
-                        <a class="lightbox" href="{{ url_for('static', filename='img/work1.jpg') }}"><i class="fa fa-search"></i></a>
-                    </div>
-                </div>
-            </div>
-            <!-- /Work -->
+    {% endfor %}
+            
 
         </div>
         <!-- /Row -->

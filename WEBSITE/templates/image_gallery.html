@@ -38,12 +38,12 @@
                     <h2 class="title">بعض أعمالنا</h2>
                     <div class="portfolioFilter">
                         <ul class="Portfolio-nav wow fadeIn delay-02s">
-                            <li><a href="#" data-filter="*" class="current">الكل</a></li>
-                            <li><a href="#" data-filter=".branding">شعارات</a></li>
-                            <li><a href="#" data-filter=".webdesign">بروشورات</a></li>
-                            <li><a href="#" data-filter=".printdesign">بنرات</a></li>
-                            <li><a href="#" data-filter=".photography">هوية بصرية</a></li>
-                            <li><a href="#" data-filter=".photography">فولدرات</a></li>
+                            <li><a href="{{ url_for('images') }}" data-filter="*" class="current">الكل</a></li>
+                            <li><a href="{{ url_for('images', category='logos') }}" data-filter=".branding">شعارات</a></li>
+                            <li><a href="{{ url_for('images', category='brochures') }}" data-filter=".webdesign">بروشورات</a></li>
+                            <li><a href="{{ url_for('images', category='banner') }}" data-filter=".printdesign">بنرات</a></li>
+                            <li><a href="{{ url_for('images', category='visualIdentity') }}" data-filter=".photography">هوية بصرية</a></li>
+                            <li><a href="{{ url_for('images', category='folders') }}" data-filter=".photography">فولدرات</a></li>
                         </ul>
                     </div>
 

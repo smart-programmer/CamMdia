@@ -7,6 +7,13 @@ from WEBSITE.utils import save_image
 
 @app.route('/', methods=['GET', 'POST'])
 def home():
+
+    images = Post.query.all()
+    images.reverse()
+    images = images[:15]
+
+    path = url_for("static", filename="posts/images")
+
     form = MessageForm()
     if form.validate_on_submit():
         full_name = form.full_name.data
@@ -17,12 +24,18 @@ def home():
                           content=content, subject=subject)
         db.session.add(message)
         db.session.commit()
-    return render_template('index.html', form=form)
+    return render_template('index.html', form=form, images=images, path=path)
 
 @app.route('/images', methods=['GET'])
 def images():
     path = url_for("static", filename="posts/images")
-    images = Post.query.all()
+
+    category = request.args.get("category", type=str)
+    if category:
+        images = Post.query.filter_by(category=category).all()
+    else:
+        images = Post.query.all()
+
     return render_template('image_gallery.html', path=path, images=images)
 
 @app.route('/admin')
@@ -65,13 +78,13 @@ def uploadTestimonial():
 @app.route('/admin/all_images')
 def all_images():
     page = request.args.get("page", 1, type=int)
-    paginate_object = Post.query.paginate(page=int(page), per_page=15)
+    paginate_object = Post.query.paginate(page=int(page), per_page=1)
     return render_template('all_images.html', paginate_object=paginate_object)  
 
 
 @app.route('/admin/all_testimonial')
 def all_testimonial():
-    return render_template('all_testimonial.html')  
+    return render_template('all_testimonial.html', messages=messages)  
 
 @app.route('/admin/messages')
 def messages():
