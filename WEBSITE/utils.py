@@ -7,6 +7,7 @@ from PIL import Image
 def save_image(image_file, path):
 
 	#if image_file:
+	
 	# create a random name
 	random_hex = secrets.token_hex(20)
 

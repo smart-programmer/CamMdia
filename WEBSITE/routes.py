@@ -1,4 +1,5 @@
 from flask import Flask, request, redirect, render_template, url_for
+from flask_mail import Message as MailMessage
 from WEBSITE import app, db, bcrypt, mail
 from WEBSITE.forms import MessageForm, LoginForm, UploadImage, UploadTestimonial, ReplyForm
 from WEBSITE import errors
@@ -24,6 +25,17 @@ def home():
                           content=content, subject=subject)
         db.session.add(message)
         db.session.commit()
+
+        #send mail
+        string = f"""{subject}"""
+        msg = MailMessage(string, sender=email, 
+        recipients=["gbeast123488@gmail.com"])
+        msg.body = f"""
+        رسالة من {full_name}
+        محتوى الرسالة:
+        {content}"""
+        mail.send(msg)
+        return redirect(url_for("home"))
     return render_template('index.html', form=form, images=images, path=path)
 
 @app.route('/images', methods=['GET'])
@@ -75,8 +87,14 @@ def uploadTestimonial():
     return render_template('upload_testimonial.html', form=form)
 
 
-@app.route('/admin/all_images')
+@app.route('/admin/all_images', methods=["GET", "POST"])
 def all_images():
+    # if request.method == "POST":
+    #     id = request.post.get("id")
+    #     post = Post.query.get(id)
+    #     db.session.delete(post)
+    #     db.session.commit()
+
     page = request.args.get("page", 1, type=int)
     paginate_object = Post.query.paginate(page=int(page), per_page=1)
     return render_template('all_images.html', paginate_object=paginate_object)  
