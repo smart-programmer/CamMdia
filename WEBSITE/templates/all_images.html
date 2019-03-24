@@ -1,6 +1,5 @@
 {% extends "layouts/_praivteLayout.html" %} {% block title %}
-<title>كل الصور </title>{% endblock %} {% block content %}
-{% for image in paginate_object.items %}
+<title>كل الصور </title>{% endblock %} {% block content %} {% for image in paginate_object.items %}
 <div class="row">
     <div class="col-md-8 mx-auto" style="margin-top:2%;">
         <div class="card">
@@ -33,18 +32,20 @@
             </div>
             <div class="card-footer">
                 <div class="btn-group float-right" role="group">
-                    <button class="btn btn-warning" type="button">Delete</button>
-                    <button class="btn btn-danger" type="button">Edit</button>
+                    <form action="">
+                        <a href="" class="btn btn-warning">Delete</a>
+                        <a href="" class="btn btn-danger">Edit</a>
+                    </form>
                 </div>
-                
+
             </div>
-            
+
         </div>
     </div>
 </div>
 {% endfor %}
 <nav aria-label="Page navigation example ">
-        <ul class="pagination justify-content-center" style="margin-top:2%;">
+    <ul class="pagination justify-content-center" style="margin-top:2%;">
         {% if paginate_object.has_prev %}
         <li class="page-item"><a class="page-link" href="{{ url_for('all_images', page=paginate_object.prev_num) }}">Previous</a></li>
         {% endif %} {% for page_num in paginate_object.iter_pages(left_edge=2, right_edge=2, left_current=4, right_current=5) %} {% if page_num %}

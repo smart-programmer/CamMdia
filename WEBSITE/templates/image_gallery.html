@@ -38,12 +38,13 @@
                     <h2 class="title">بعض أعمالنا</h2>
                     <div class="portfolioFilter">
                         <ul class="Portfolio-nav wow fadeIn delay-02s">
-                            <li><a href="{{ url_for('images') }}" data-filter="*" class="current">الكل</a></li>
-                            <li><a href="{{ url_for('images', category='logos') }}" data-filter=".branding">شعارات</a></li>
-                            <li><a href="{{ url_for('images', category='brochures') }}" data-filter=".webdesign">بروشورات</a></li>
-                            <li><a href="{{ url_for('images', category='banner') }}" data-filter=".printdesign">بنرات</a></li>
-                            <li><a href="{{ url_for('images', category='visualIdentity') }}" data-filter=".photography">هوية بصرية</a></li>
-                            <li><a href="{{ url_for('images', category='folders') }}" data-filter=".photography">فولدرات</a></li>
+                            <li><a href="{{ url_for('images') }}" data-filter="*" class="current" id="all">الكل</a></li>
+                            <li><a href="{{ url_for('images', category='logos') }}" class="" id="logos">شعارات</a></li>
+                            <li><a href="{{ url_for('images', category='brochures') }}" class="" id="brochures">بروشورات</a></li>
+                            <li><a href="{{ url_for('images', category='banner') }}" class="" id="banner">بنرات</a></li>
+                            <li><a href="{{ url_for('images', category='visualIdentity') }}" class="" id="visualIdentity">هوية بصرية</a></li>
+                            <li><a href="{{ url_for('images', category='folders') }}" class="" id="folders">فولدرات</a>
+                            </li>
                         </ul>
                     </div>
 
@@ -72,7 +73,7 @@
             </div>
             <!-- /Row -->
             <div class="text-center">
-                <a href="" class="main-btn">إستكشف الموقع</a>
+                <a href="{{ url_for('home') }}" class="main-btn"> الرئيسية</a>
             </div>
             <!-- /Container -->
 
@@ -124,6 +125,23 @@
     </footer>
     <!-- /Footer -->
 </header>
+<script>
+    var url = window.location.href;
+    var pathname = new URL(url);
+    var category = pathname.searchParams.get("category");
+    var filters = ["all", "logos", "brochures", "banner", "visualIdentity", "folders"];
+    var subfilters = [];
+    filters.forEach(filter => {
+        var filter = document.getElementById(filter);
+        subfilters.push(filter);
+    });
+    subfilters.forEach(filter => {
+        if (category == filter.id) {
+            filter.classList.add("current");
+            all.classList.remove("current");
+        }
+    });
+</script>
 <!-- /Header -->
 
 {% endblock %}
