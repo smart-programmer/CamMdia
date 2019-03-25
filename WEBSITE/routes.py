@@ -1,7 +1,7 @@
 from flask import Flask, request, redirect, render_template, url_for
 from flask_mail import Message as MailMessage
 from WEBSITE import app, db, bcrypt, mail
-from WEBSITE.forms import MessageForm, LoginForm, UploadImage, UploadTestimonial, ReplyForm
+from WEBSITE.forms import MessageForm, LoginForm, UploadImage, UploadTestimonial, ReplyForm, SimpleForm
 from WEBSITE import errors
 from WEBSITE.models import Message, Post
 from WEBSITE.utils import save_image
@@ -89,15 +89,23 @@ def uploadTestimonial():
 
 @app.route('/admin/all_images', methods=["GET", "POST"])
 def all_images():
-    # if request.method == "POST":
-    #     id = request.post.get("id")
-    #     post = Post.query.get(id)
-    #     db.session.delete(post)
-    #     db.session.commit()
+    form = SimpleForm()
+    form.button1.content = "Delete"
+    form.button2.text = "Delete"
+    if form.validate_on_submit():
+        postID = request.form.get("id")
+
+        if request.form.get("button1"):
+            return redirect(url_for("all_images"))
+        else:
+            post = Post.query.get(int(postID))
+            db.session.delete(post)
+            db.session.commit()
+            return redirect(url_for("all_images"))
 
     page = request.args.get("page", 1, type=int)
     paginate_object = Post.query.paginate(page=int(page), per_page=1)
-    return render_template('all_images.html', paginate_object=paginate_object)  
+    return render_template('all_images.html', paginate_object=paginate_object, form=form)  
 
 
 @app.route('/admin/all_testimonial')

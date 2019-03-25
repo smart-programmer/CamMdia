@@ -62,3 +62,10 @@ class ReplyForm(FlaskForm):
     message = wtforms.TextAreaField("نص الرسالة ", validators=[
                                     DataRequired(), length(max=1000)])
     submit = wtforms.SubmitField("أرسل")
+
+
+
+
+class SimpleForm(FlaskForm):
+    button1 = wtforms.SubmitField("button1")
+    button2 = wtforms.SubmitField("button2")
