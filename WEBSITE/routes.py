@@ -1,6 +1,6 @@
 from flask import Flask, request, redirect, render_template, url_for
 from flask_mail import Message as MailMessage
-from WEBSITE import app, db, bcrypt, mail
+from WEBSITE import app, db, bcrypt, mail, MAIL_USERNAME
 from WEBSITE.forms import MessageForm, LoginForm, UploadImage, UploadTestimonial, ReplyForm, SimpleForm
 from WEBSITE import errors
 from WEBSITE.models import Message, Post
@@ -28,10 +28,12 @@ def home():
 
         #send mail
         string = f"""{subject}"""
-        msg = MailMessage(string, sender=email, 
-        recipients=["gbeast123488@gmail.com"])
+        msg = MailMessage(string, sender=MAIL_USERNAME, 
+        recipients=[MAIL_USERNAME])
         msg.body = f"""
-        رسالة من {full_name}
+        رسالة من {full_name}:
+        ايميل:{email}
+        
         محتوى الرسالة:
         {content}"""
         mail.send(msg)
@@ -90,14 +92,10 @@ def uploadTestimonial():
 @app.route('/admin/all_images', methods=["GET", "POST"])
 def all_images():
     form = SimpleForm()
-    form.button1.content = "Delete"
-    form.button2.text = "Delete"
     if form.validate_on_submit():
         postID = request.form.get("id")
 
-        if request.form.get("button1"):
-            return redirect(url_for("all_images"))
-        else:
+        if request.form.get("button2"):
             post = Post.query.get(int(postID))
             db.session.delete(post)
             db.session.commit()
@@ -110,13 +108,27 @@ def all_images():
 
 @app.route('/admin/all_testimonial')
 def all_testimonial():
+    # form
     return render_template('all_testimonial.html', messages=messages)  
 
-@app.route('/admin/messages')
+@app.route('/admin/messages', methods=["GET", "POST"])
 def messages():
+    form = SimpleForm()
+    if form.validate_on_submit():
+        messageID = request.form.get("id")
+
+        if request.form.get("button1"):
+            return redirect(url_for("messages"))
+
+        elif request.form.get("button2"):
+            message = Message.query.get(int(messageID))
+            db.session.delete(message)
+            db.session.commit()
+            return redirect(url_for("messages"))
+
     page = request.args.get("page", 1, type=int)
     paginate_object = Message.query.filter().paginate(page=int(page), per_page=5)
-    return render_template('messages.html', paginate_object=paginate_object)
+    return render_template('messages.html', paginate_object=paginate_object, form=form)
 
 @app.route('/admin/deleted_messages')
 def deleted_messages():
@@ -127,7 +139,28 @@ def done_messages():
     return render_template('done_messages.html')  
 
 
-@app.route('/admin/reply')
-def reply():
+@app.route('/admin/reply/<emailID>')
+def reply(emailID):
     form = ReplyForm()
+
+    email_id = emailID
+    replied_to_email = Message.query.get(email_id)
+    if form.validate_on_submit():
+        subject = form.subject.data
+        email = replied_to_email.email
+        message = form.message.data
+        
+        #send mail
+        string = f"""{subject}"""
+        msg = MailMessage(string, sender=MAIL_USERNAME, 
+        recipients=[email])
+        msg.body = f"""
+        ردا على الايميل الذي ارسل على:{request.host}
+
+
+
+        {content}
+        """
+        mail.send(msg) 
+        return redirect(url_for("messages"))
     return render_template('reply.html', form=form)

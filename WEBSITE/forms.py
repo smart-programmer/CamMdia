@@ -57,8 +57,6 @@ class UploadTestimonial(FlaskForm):
 class ReplyForm(FlaskForm):
     subject = wtforms.StringField("عنون الرسالة", validators=[
         length(max=255)])
-    email = wtforms.StringField("البريد الإلكتروني", validators=[
-        Email(), DataRequired(), length(max=255)])
     message = wtforms.TextAreaField("نص الرسالة ", validators=[
                                     DataRequired(), length(max=1000)])
     submit = wtforms.SubmitField("أرسل")

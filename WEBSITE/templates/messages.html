@@ -17,9 +17,11 @@
             </div>
             <div class="card-footer">
                 <div class="btn-group float-right" role="group">
-                    <form action=''>
-                        <input type="button" class="btn btn-success" value=" Replay">
-                        <input type="button" class="btn btn-danger" value=" Delete">
+                    <form action='' method="POST">
+                        {{ form.hidden_tag() }}
+                        {{ form.button1(class="btn btn-success", value="Reply") }}
+                        {{ form.button2(class="btn btn-danger", value="Delete") }}
+                        <input type="hidden" value="{{ message.id }}" name="id">
                     </form>
                 </div>
             </div>

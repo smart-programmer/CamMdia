@@ -21,7 +21,7 @@ class Post(db.Model):
     post_date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
 
 
-   
+
 
 
 
