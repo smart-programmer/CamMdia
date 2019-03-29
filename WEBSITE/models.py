@@ -8,6 +8,7 @@ class Message(db.Model):
     subject = db.Column(db.String(255), unique=False, nullable=True)
     email = db.Column(db.String(255), unique=False, nullable=False)
     content = db.Column(db.String(1000), unique=False, nullable=False)
+    state = db.Column(db.String(20), nullable=False, default="active") # read
 
 
 

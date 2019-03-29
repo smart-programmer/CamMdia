@@ -116,18 +116,22 @@ def messages():
     form = SimpleForm()
     if form.validate_on_submit():
         messageID = request.form.get("id")
+        message = Message.query.get(int(messageID))
 
         if request.form.get("button1"):
             return redirect(url_for("reply", emailID=messageID))
 
         elif request.form.get("button2"):
-            message = Message.query.get(int(messageID))
             db.session.delete(message)
             db.session.commit()
             return redirect(url_for("messages"))
+        
+        elif request.form.get("button3"):
+            message.state = "read"
+            db.session.commit()
 
     page = request.args.get("page", 1, type=int)
-    paginate_object = Message.query.filter().paginate(page=int(page), per_page=5)
+    paginate_object = Message.query.filter_by(state="active").paginate(page=int(page), per_page=5)
     return render_template('messages.html', paginate_object=paginate_object, form=form)
 
 @app.route('/admin/deleted_messages')

@@ -67,3 +67,4 @@ class ReplyForm(FlaskForm):
 class SimpleForm(FlaskForm):
     button1 = wtforms.SubmitField("button1")
     button2 = wtforms.SubmitField("button2")
+    button3 = wtforms.SubmitField("button3")
