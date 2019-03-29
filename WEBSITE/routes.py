@@ -118,7 +118,7 @@ def messages():
         messageID = request.form.get("id")
 
         if request.form.get("button1"):
-            return redirect(url_for("messages"))
+            return redirect(url_for("reply", emailID=messageID))
 
         elif request.form.get("button2"):
             message = Message.query.get(int(messageID))
@@ -139,7 +139,7 @@ def done_messages():
     return render_template('done_messages.html')  
 
 
-@app.route('/admin/reply/<emailID>')
+@app.route('/admin/reply/<emailID>', methods=["GET", "POST"])
 def reply(emailID):
     form = ReplyForm()
 
@@ -148,7 +148,7 @@ def reply(emailID):
     if form.validate_on_submit():
         subject = form.subject.data
         email = replied_to_email.email
-        message = form.message.data
+        content = form.message.data
         
         #send mail
         string = f"""{subject}"""

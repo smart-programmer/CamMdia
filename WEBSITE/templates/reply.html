@@ -14,16 +14,13 @@
 <body>
     <div id="form-main">
         <div id="form-div">
-            <form class="form" id="form1">
+            <form class="form" id="form1" method="POST">
                 {{ form.hidden_tag() }}
                 <p class="name">
                     {{ form.subject(class="validate[required,custom[onlyLetter],length[0,100]] feedback-input", placeholder="subject") }} {% for error in form.subject.errors %}
                     <span id="helpBlock" class="help-block">{{ error }}</span> {% endfor %}
                 </p>
-                <p class="message">
-                    {{ form.email(class="validate[required,custom[email]] feedback-input", placeholder="email") }} {% for error in form.email.errors %}
-                    <span id="helpBlock" class="help-block">{{ error }}</span> {% endfor %}
-                </p>
+                <!--  -->
                 <p class="text">
                     {{ form.message(class="validate[required,length[6,300]] feedback-input", placeholder="message") }} {% for error in form.message.errors %}
                     <span id="helpBlock" class="help-block">{{ error }}</span> {% endfor %}
