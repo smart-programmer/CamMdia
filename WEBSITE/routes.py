@@ -124,23 +124,39 @@ def messages():
         elif request.form.get("button2"):
             db.session.delete(message)
             db.session.commit()
-            return redirect(url_for("messages"))
         
         elif request.form.get("button3"):
             message.state = "read"
             db.session.commit()
+        
+        return redirect(url_for("messages")) if not request.args.get("page") else redirect(url_for("messages", request.args.get("page")))
+
 
     page = request.args.get("page", 1, type=int)
     paginate_object = Message.query.filter_by(state="active").paginate(page=int(page), per_page=5)
     return render_template('messages.html', paginate_object=paginate_object, form=form)
 
-@app.route('/admin/deleted_messages')
-def deleted_messages():
-    return render_template('deleted_messages.html')
-
-@app.route('/admin/done_messages')
+@app.route('/admin/done_messages', methods=["GET", "POST"])
 def done_messages():
-    return render_template('done_messages.html')  
+    form = SimpleForm()
+
+    if form.validate_on_submit():
+        messageID = request.form.get("id")
+        message = Message.query.get(int(messageID))
+
+        if request.form.get("button1"):
+            message.state = "read"
+            db.session.commit()
+        
+        elif request.form.get("button2"):
+            db.session.delete(message)
+            db.session.commit()
+
+        return redirect(url_for("done_messages")) if not request.args.get("page") else redirect(url_for("done_messages", request.args.get("page")))
+
+    page = request.args.get("page", 1, type=int)
+    paginate_object = Message.query.filter_by(state="read").paginate(page=int(page), per_page=5)
+    return render_template('done_messages.html', paginate_object=paginate_object, form=form)  
 
 
 @app.route('/admin/reply/<emailID>', methods=["GET", "POST"])

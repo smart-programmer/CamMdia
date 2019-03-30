@@ -1,29 +1,34 @@
 {% extends "layouts/_praivteLayout.html" %}{% block title %}
 <title>رسائل تم قرائتها</title>{% endblock %}{% block content %}
 <div class="row">
+    {% for message in paginate_object.items %}
     <div class="col-md-8 mx-auto" style="margin-top:2%;">
 
         <div class="card">
             <h5 class="card-header">
-                Card title
+                {{ message.subject }}
 
             </h5>
             <div class="card-body">
                 <p class="card-text">
-                    Card content
+                    {{ message.email }}    {{ message.content }}
                 </p>
             </div>
             <div class="card-footer">
                 <div class="btn-group float-right" role="group">
                     <form action="">
                         <form action="">
-                            <input type="button" class="btn btn-danger" value=" Delete">
+                                {{ form.hidden_tag() }}
+                                {{ form.button1(class="btn btn-success", value="Mark as unread") }}
+                                {{ form.button2(class="btn btn-danger", value="Delete") }}
+                                <input type="hidden" value="{{ message.id }}" name="id">
                         </form>
                     </form>
                 </div>
             </div>
         </div>
     </div>
+    {% endfor %}
 </div>
 <nav aria-label="Page navigation example ">
     <ul class="pagination justify-content-center" style="margin-top:2%;">
