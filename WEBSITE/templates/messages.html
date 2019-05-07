@@ -32,12 +32,16 @@
 
 </div>
 <nav aria-label="Page navigation example ">
-    <ul class="pagination justify-content-center " style="margin-top:2%; ">
-        <li class="page-item "><a class="page-link " href="# ">Previous</a></li>
-        <li class="page-item "><a class="page-link " href="# ">1</a></li>
-        <li class="page-item "><a class="page-link " href="# ">2</a></li>
-        <li class="page-item "><a class="page-link " href="# ">3</a></li>
-        <li class="page-item "><a class="page-link " href="# ">Next</a></li>
+    <ul class="pagination justify-content-center" style="margin-top:2%;">
+        {% if paginate_object.has_prev %}
+        <li class="page-item"><a class="page-link" href="{{ url_for('messages', page=paginate_object.prev_num) }}">Previous</a></li>
+        {% endif %} {% for page_num in paginate_object.iter_pages(left_edge=2, right_edge=2, left_current=4, right_current=5) %} {% if page_num %}
+        <li class="page-item"><a class="page-link" href="{{ url_for('messages', page=page_num) }}">{{ page_num }}</a></li>
+        {% else %}
+        <li>...</li>
+        {% endif %} {% endfor %} {% if paginate_object.has_next %}
+        <li class="page-item"><a class="page-link" href="{{ url_for('messages', page=paginate_object.next_num) }}">Next</a></li>
+        {% endif %}
     </ul>
 </nav>
 {% endblock %}

@@ -8,7 +8,7 @@ class Message(db.Model):
     subject = db.Column(db.String(255), unique=False, nullable=True)
     email = db.Column(db.String(255), unique=False, nullable=False)
     content = db.Column(db.String(1000), unique=False, nullable=False)
-    state = db.Column(db.String(20), nullable=False, default="active") # read
+    state = db.Column(db.String(20), nullable=False, default="active") # read, active
 
 
 
@@ -20,6 +20,9 @@ class Post(db.Model):
     post_description = db.Column(db.String(600), nullable=True)
     project_link = db.Column(db.String(255), nullable=True)
     post_date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+
+
+
 
 
 

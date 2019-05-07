@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link href="https://fonts.googleapis.com/css?family=Muli:300,400,700" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://get.mavo.io/mavo.css" />
+    <script src="https://get.mavo.io/mavo.js"></script>
+    <style>
+        body {
+            font-family: "Muli", sans-serif;
+            margin: 0;
+        }
+        
+        .hide {
+            display: none;
+        }
+        
+        .mv-add {
+            background-color: green;
+            color: white;
+            border: 0;
+            padding: 1rem;
+            text-transform: Capitalize;
+        }
+        
+        #masthead {
+            background-color: black;
+            box-shadow: 0px 2px 15px 0px rgba(0, 0, 0, 0.3);
+            text-align: center;
+        }
+        
+        #masthead a {
+            color: white;
+            text-decoration: none;
+        }
+        
+        .masthead-inner {
+            text-align: center;
+            max-width: 1170px;
+            margin: auto;
+        }
+        
+        @media (min-width: 800px) {
+            .masthead-inner {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+        }
+        
+        @media (min-width: 800px) {
+            .title {
+                display: flex;
+                align-items: center;
+            }
+        }
+        
+        .mv-bar.mv-ui {
+            margin-top: 2rem;
+            background-color: black;
+            background-image: url();
+            justify-content: center;
+            align-items: center;
+            padding: 0 0 1rem;
+        }
+        
+        .mv-bar.mv-ui .mv-status {
+            display: none;
+        }
+        
+        .mv-bar.mv-ui button.mv-login {
+            margin-left: initial;
+        }
+        
+        @media (min-width: 800px) {
+            .mv-bar.mv-ui button {
+                margin-right: 1rem;
+                padding: 0;
+            }
+        }
+        
+        @media (min-width: 800px) {
+            .mv-bar.mv-ui:not(.mv-fixed) {
+                margin: 0;
+                padding: 0;
+            }
+        }
+        
+        .mv-bar.mv-ui.mv-compact {
+            background-image: url();
+        }
+        
+        .site-title h1 {
+            display: inline-block;
+            margin: 0;
+            padding: 1rem;
+            font-weight: 400;
+            text-transform: uppercase;
+            width: auto;
+        }
+        
+        @media (min-width: 800px) {
+            .site-title h1:after {
+                content: "//";
+                margin-left: 1rem;
+            }
+        }
+        
+        .tagline {
+            padding: 0 1rem;
+        }
+        
+        .tagline h2 {
+            color: white;
+            font-weight: 300;
+            font-size: 1rem;
+            margin: 0;
+        }
+        
+        @media (min-width: 800px) {
+            .tagline {
+                padding: 0;
+            }
+        }
+        
+        .post {
+            max-width: 1000px;
+            margin: 3rem auto;
+            padding: 0 1rem;
+        }
+        
+        @media (min-width: 600px) {
+            .post {
+                display: flex;
+                margin: 6rem auto;
+                padding: 0 1rem;
+            }
+        }
+        
+        @media (min-width: 600px) {
+            .post-content {
+                order: 2;
+                padding-left: 3rem;
+            }
+        }
+        
+        @supports (display: grid) {
+            @media (min-width: 600px) {
+                .post {
+                    display: grid;
+                    grid-template-columns: 150px 1fr;
+                    grid-gap: 3rem;
+                    margin: 3rem auto;
+                    padding: 0 1rem;
+                }
+            }
+            @media (min-width: 768px) {
+                .post {
+                    grid-template-columns: 250px 1fr;
+                    margin: 6rem auto;
+                }
+            }
+            @media (min-width: 600px) {
+                .post-content {
+                    order: 2;
+                    padding: 0;
+                }
+            }
+        }
+        
+        .post-sidebar {
+            border-top: 1px solid rgba(0, 0, 0, 0.3);
+            padding-top: 2rem;
+            margin-top: 2rem;
+        }
+        
+        @media (min-width: 600px) {
+            .post-sidebar {
+                border: 0;
+                padding-top: 0;
+                margin-top: 0;
+            }
+        }
+        
+        .post-widget {
+            margin-bottom: 2rem;
+        }
+        
+        .post-widget-image img {
+            width: 50%;
+        }
+        
+        @media (min-width: 600px) {
+            .post-widget-image img {
+                width: 100%;
+            }
+        }
+        
+        .post-widget-header h3 {
+            margin-top: 0.5rem;
+        }
+        
+        .post-widget-text p {
+            line-height: 1.5;
+            font-size: 0.9rem;
+        }
+        
+        .post-wrapper {
+            margin-bottom: 4rem;
+        }
+        
+        .post-title h2 {
+            margin-top: 0;
+        }
+        
+        .post-text p {
+            line-height: 1.5;
+        }
+        
+        .to-top {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            z-index: 100;
+        }
+        
+        .to-top p {
+            margin: 0;
+        }
+        
+        .to-top a {
+            color: black;
+            font-size: 2rem;
+        }
+        
+        .to-top a:hover {
+            color: rgba(0, 0, 0, 0.8);
+        }
+    </style>
+    <title>{{ post.category }}</title>
+</head>
+
+<body>
+
+    <div id="app">
+        <header id="masthead">
+            <div class="masthead-inner">
+                <div class="title">
+                    <a class="site-title" href="#0">
+                        <h1 property="site-title">{{ post.category }}</h1>
+                    </a>
+                    <div class="tagline">
+                        <h2 property="site-tagline"></h2>
+                    </div>
+                </div>
+                <nav class="editing mv-bar mv-ui"></nav>
+            </div>
+        </header>
+        <main>
+            <div class="post">
+                <section class="post-content">
+                    <div class="post-wrapper" property="new-post" mv-multiple="mv-multiple">
+                        <header class="post-title">
+                            <h2 property="post-title" mv-default="New Post Title">{{ post.post_title }}</h2>
+                        </header>
+                        <div class="post-text">
+                            <article class="markdown" property="post-text" mv-default="Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias eos qui incidunt magnam, nihil reprehenderit ipsa distinctio animi recusandae ad vel reiciendis quibusdam voluptas fugit! Mollitia ab placeat voluptates accusantium, quae praesentium natus eveniet? Minima velit, itaque eos praesentium sint quae debitis illum laudantium vitae ipsa pariatur, esse natus commodi!">
+                                {{ post.post_description }}</article>
+                        </div>
+                    </div>
+                </section>
+                <aside class="post-sidebar">
+                    <div class="post-widget">
+                        <section class="post-widget-image"><img property="widget-image" src="{{ path }}/{{ post.image_string }}" /></section>
+                    </div>
+                    <div class="post-widget" property="new-widget" mv-multiple="mv-multiple">
+                        <header class="post-widget-header">
+                            <a href="{{ post.project_link }}"><h3 property="widget-header" mv-default="Widget Header">{{ post.project_link }}</h3></a>
+                            <h3 property="widget-header" mv-default="Widget Header">{{ post.post_date }}</h3>
+                        </header>
+                        <div class="post-widget-text">
+                            <article class="markdown" property="widget-text" mv-default="Lorem ipsum dolor sit amet consectetur adipisicing elit. Delectus rerum libero enim commodi expedita molestiae, modi veniam at vero est!">
+                                </article>
+                        </div>
+                    </div>
+                </aside>
+            </div>
+        </main>
+    </div>
+    <aside class="to-top hide">
+        <a href="#top">
+            <p><i class="zmdi zmdi-caret-up-circle"></i></p>
+        </a>
+    </aside>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script>
+        $(window).scroll(function() {
+            if ($(window).scrollTop() > 100) {
+                $('.to-top').removeClass('hide');
+            } else {
+                $('.to-top').addClass('hide');
+            }
+        });
+    </script>
+</body>
+
+</html>

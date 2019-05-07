@@ -1,10 +1,13 @@
-from flask import Flask, request, redirect, render_template, url_for
+from flask import Flask, request, redirect, render_template, url_for, make_response
 from flask_mail import Message as MailMessage
 from WEBSITE import app, db, bcrypt, mail, MAIL_USERNAME
 from WEBSITE.forms import MessageForm, LoginForm, UploadImage, UploadTestimonial, ReplyForm, SimpleForm
 from WEBSITE import errors
 from WEBSITE.models import Message, Post
 from WEBSITE.utils import save_image
+import datetime
+
+# /// 5air
 
 @app.route('/', methods=['GET', 'POST'])
 def home():
@@ -38,7 +41,22 @@ def home():
         {content}"""
         mail.send(msg)
         return redirect(url_for("home"))
-    return render_template('index.html', form=form, images=images, path=path)
+
+    # visitors counter system
+    response = make_response(render_template('index.html', form=form, images=images, path=path))
+    did_visit = request.cookies.get("did_visit")
+    if not did_visit:
+        expire_date = datetime.datetime.now()
+        expire_date = expire_date + datetime.timedelta(days=100000)
+        response.set_cookie("did_visit", "True", expires=expire_date)
+        visitors_file_directory = url_for("static", filename="visitors.txt")
+        with open(visitors_file_directory, "r+") as visitors_file:
+            number = int(visitors_file.read())
+            number += 1
+            visitors_file.truncate(0)
+            visitors_file.seek(0)
+            visitors_file.write(number)
+    return response
 
 @app.route('/images', methods=['GET'])
 def images():
@@ -47,8 +65,10 @@ def images():
     category = request.args.get("category", type=str)
     if category:
         images = Post.query.filter_by(category=category).all()
+        images.reverse()
     else:
         images = Post.query.all()
+        images.reverse()
 
     return render_template('image_gallery.html', path=path, images=images)
 
@@ -95,7 +115,10 @@ def all_images():
     if form.validate_on_submit():
         postID = request.form.get("id")
 
-        if request.form.get("button2"):
+        if request.form.get("button1"):
+            return redirect(url_for("updateImage", id=postID))
+
+        elif request.form.get("button2"):
             post = Post.query.get(int(postID))
             db.session.delete(post)
             db.session.commit()
@@ -129,11 +152,11 @@ def messages():
             message.state = "read"
             db.session.commit()
         
-        return redirect(url_for("messages")) if not request.args.get("page") else redirect(url_for("messages", request.args.get("page")))
+        return redirect(url_for("messages")) if not request.args.get("page") else redirect(url_for("messages", page=request.args.get("page")))
 
 
     page = request.args.get("page", 1, type=int)
-    paginate_object = Message.query.filter_by(state="active").paginate(page=int(page), per_page=5)
+    paginate_object = Message.query.filter_by(state="active").paginate(page=int(page), per_page=1)
     return render_template('messages.html', paginate_object=paginate_object, form=form)
 
 @app.route('/admin/done_messages', methods=["GET", "POST"])
@@ -145,17 +168,17 @@ def done_messages():
         message = Message.query.get(int(messageID))
 
         if request.form.get("button1"):
-            message.state = "read"
+            message.state = "active"
             db.session.commit()
         
         elif request.form.get("button2"):
             db.session.delete(message)
             db.session.commit()
 
-        return redirect(url_for("done_messages")) if not request.args.get("page") else redirect(url_for("done_messages", request.args.get("page")))
+        return redirect(url_for("done_messages")) if not request.args.get("page") else redirect(url_for("done_messages", page=request.args.get("page")))
 
     page = request.args.get("page", 1, type=int)
-    paginate_object = Message.query.filter_by(state="read").paginate(page=int(page), per_page=5)
+    paginate_object = Message.query.filter_by(state="read").paginate(page=int(page), per_page=6)
     return render_template('done_messages.html', paginate_object=paginate_object, form=form)  
 
 
@@ -184,3 +207,37 @@ def reply(emailID):
         mail.send(msg) 
         return redirect(url_for("messages"))
     return render_template('reply.html', form=form)
+
+
+@app.route("/image/<id>")
+def detail_view(id):
+    postId = id
+    post = Post.query.get(id)
+
+    path = url_for("static", filename="posts/images")
+    return render_template("page.html", post=post, path=path)
+
+
+@app.route('/admin/updateImage/<id>', methods=['GET', 'POST'])
+def updateImage(id):
+    form = UploadImage()
+    postID = id
+    post = Post.query.get(postID)
+    if form.validate_on_submit():
+        post.post_title = form.title.data
+        post.post_description = form.description.data
+        post.category = form.filters.data
+        post.project_link = form.url.data
+
+        db.session.commit()
+
+        return redirect(url_for('updateImage', id=postID))
+    elif request.method == "GET":
+        form.title.data = post.post_title
+        form.description.data = post.post_description
+        form.filters.data = post.category
+        form.url.data = post.project_link
+
+    path = url_for("static", filename="posts/images")
+
+    return render_template('update_image.html', form=form, post=post, path=path)
