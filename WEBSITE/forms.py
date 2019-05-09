@@ -5,6 +5,7 @@ from wtforms_components import SelectField
 from flask_wtf.file import FileField, FileAllowed 
 from wtforms.widgets import TextArea
 
+
 subFilters = (
     ("logos", "شعارات"),
     ("brochures", "بروشورات"),
@@ -27,6 +28,7 @@ class MessageForm(FlaskForm):
 
 
 class LoginForm(FlaskForm):
+    username = wtforms.StringField("اسم المستخدم")
     password = wtforms.StringField("الرقم السري")
     submit = wtforms.SubmitField("تسجيل الدخول")
 

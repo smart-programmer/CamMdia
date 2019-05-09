@@ -3,8 +3,9 @@ from flask_mail import Message as MailMessage
 from WEBSITE import app, db, bcrypt, mail, MAIL_USERNAME
 from WEBSITE.forms import MessageForm, LoginForm, UploadImage, UploadTestimonial, ReplyForm, SimpleForm
 from WEBSITE import errors
-from WEBSITE.models import Message, Post, Testimonial
+from WEBSITE.models import Message, Post, Testimonial, User
 from WEBSITE.utils import save_image, handle_new_visitor, get_visitors_file
+from flask_login import current_user, login_user, login_required, logout_user
 
 
 
@@ -73,6 +74,7 @@ def images():
     return response
 
 @app.route('/admin')
+@login_required
 def admin():
     # get visitors count
     visitors = 0
@@ -84,12 +86,35 @@ def admin():
     messages = len(Message.query.filter_by(state="active").all())
     return render_template('admin.html', visitors=visitors, messages_count=messages)
 
-@app.route('/admin/login', methods=['GET', 'POST'])
+@app.route('/login', methods=['GET', 'POST'])
 def login():
+    if current_user.is_authenticated:
+        return redirect(url_for("home"))
+
     form = LoginForm()
+
+    if form.validate_on_submit():
+        username = form.username.data
+        user = User.query.filter_by(username=username).first()
+        if user:
+            if bcrypt.check_password_hash(user.password, form.password.data):
+                login_user(user, remember=True)
+                next_page = request.args.get("next")
+                return redirect(next_page) if next_page else redirect(url_for("admin"))
+            else:
+                return redirect(url_for("login"))
+        else:
+            return redirect(url_for("login"))
     return render_template('login.html', form=form)
 
+@app.route("/logout")
+@login_required
+def logout():
+    logout_user()
+    return redirect(url_for("home"))
+
 @app.route('/admin/uploadImage', methods=['GET', 'POST'])
+@login_required
 def uploadImage():
     form = UploadImage()
     
@@ -112,6 +137,7 @@ def uploadImage():
 
 
 @app.route('/admin/uploadTestimonial', methods=['GET', 'POST'])
+@login_required
 def uploadTestimonial():
     form = UploadTestimonial()
     if form.validate_on_submit():
@@ -127,6 +153,7 @@ def uploadTestimonial():
 
 
 @app.route('/admin/all_images', methods=["GET", "POST"])
+@login_required
 def all_images():
     form = SimpleForm()
     if form.validate_on_submit():
@@ -148,6 +175,7 @@ def all_images():
 
 
 @app.route('/admin/all_testimonial', methods=["GET", "POST"])
+@login_required
 def all_testimonial():
     page = request.args.get("page", 1, type=int)
     paginate_object = Testimonial.query.paginate(page=int(page), per_page=2)
@@ -181,6 +209,7 @@ def all_testimonial():
     return render_template('all_testimonial.html', paginate_object=paginate_object, form=form)  
 
 @app.route('/admin/messages', methods=["GET", "POST"])
+@login_required
 def messages():
     form = SimpleForm()
     if form.validate_on_submit():
@@ -206,6 +235,7 @@ def messages():
     return render_template('messages.html', paginate_object=paginate_object, form=form)
 
 @app.route('/admin/done_messages', methods=["GET", "POST"])
+@login_required
 def done_messages():
     form = SimpleForm()
 
@@ -229,6 +259,7 @@ def done_messages():
 
 
 @app.route('/admin/reply/<emailID>', methods=["GET", "POST"])
+@login_required
 def reply(emailID):
     form = ReplyForm()
 
@@ -271,6 +302,7 @@ def detail_view(id):
 
 
 @app.route('/admin/updateImage/<id>', methods=['GET', 'POST'])
+@login_required
 def updateImage(id):
     form = UploadImage()
     postID = id
@@ -296,6 +328,7 @@ def updateImage(id):
 
 
 @app.route('/admin/updateTestimonial/<id>', methods=['GET', 'POST'])
+@login_required
 def updateTestimonial(id):
     form = UploadTestimonial()
     testimonialID = id
