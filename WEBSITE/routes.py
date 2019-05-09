@@ -3,14 +3,17 @@ from flask_mail import Message as MailMessage
 from WEBSITE import app, db, bcrypt, mail, MAIL_USERNAME
 from WEBSITE.forms import MessageForm, LoginForm, UploadImage, UploadTestimonial, ReplyForm, SimpleForm
 from WEBSITE import errors
-from WEBSITE.models import Message, Post
-from WEBSITE.utils import save_image
-import datetime
+from WEBSITE.models import Message, Post, Testimonial
+from WEBSITE.utils import save_image, handle_new_visitor, get_visitors_file
+
+
 
 # /// 5air
 
 @app.route('/', methods=['GET', 'POST'])
 def home():
+
+    testimonials = Testimonial.query.filter_by(state="active")
 
     images = Post.query.all()
     images.reverse()
@@ -43,19 +46,11 @@ def home():
         return redirect(url_for("home"))
 
     # visitors counter system
-    response = make_response(render_template('index.html', form=form, images=images, path=path))
+    response = make_response(render_template('index.html', form=form, images=images, path=path,
+    testimonials=testimonials))
     did_visit = request.cookies.get("did_visit")
     if not did_visit:
-        expire_date = datetime.datetime.now()
-        expire_date = expire_date + datetime.timedelta(days=100000)
-        response.set_cookie("did_visit", "True", expires=expire_date)
-        visitors_file_directory = url_for("static", filename="visitors.txt")
-        with open(visitors_file_directory, "r+") as visitors_file:
-            number = int(visitors_file.read())
-            number += 1
-            visitors_file.truncate(0)
-            visitors_file.seek(0)
-            visitors_file.write(number)
+        handle_new_visitor(response)
     return response
 
 @app.route('/images', methods=['GET'])
@@ -70,11 +65,24 @@ def images():
         images = Post.query.all()
         images.reverse()
 
-    return render_template('image_gallery.html', path=path, images=images)
+    # visitors counter system
+    response = make_response(render_template('image_gallery.html', path=path, images=images))
+    did_visit = request.cookies.get("did_visit")
+    if not did_visit:
+        handle_new_visitor(response)
+    return response
 
 @app.route('/admin')
 def admin():
-    return render_template('admin.html')
+    # get visitors count
+    visitors = 0
+    with open(get_visitors_file(), "r") as visitors_file:
+        visitors = visitors_file.read()
+
+    # get active messages count
+    messages = 0
+    messages = len(Message.query.filter_by(state="active").all())
+    return render_template('admin.html', visitors=visitors, messages_count=messages)
 
 @app.route('/admin/login', methods=['GET', 'POST'])
 def login():
@@ -106,6 +114,15 @@ def uploadImage():
 @app.route('/admin/uploadTestimonial', methods=['GET', 'POST'])
 def uploadTestimonial():
     form = UploadTestimonial()
+    if form.validate_on_submit():
+        name = form.name.data
+        work = form.work.data
+        description = form.description.data
+        testimonial = Testimonial(client_name=name, client_work=work, content=description)
+        db.session.add(testimonial)
+        db.session.commit()
+        return redirect(url_for("uploadTestimonial"))
+
     return render_template('upload_testimonial.html', form=form)
 
 
@@ -124,15 +141,44 @@ def all_images():
             db.session.commit()
             return redirect(url_for("all_images"))
 
+    path = url_for("static", filename="posts/images")
     page = request.args.get("page", 1, type=int)
     paginate_object = Post.query.paginate(page=int(page), per_page=1)
-    return render_template('all_images.html', paginate_object=paginate_object, form=form)  
+    return render_template('all_images.html', paginate_object=paginate_object, form=form, path=path)  
 
 
-@app.route('/admin/all_testimonial')
+@app.route('/admin/all_testimonial', methods=["GET", "POST"])
 def all_testimonial():
-    # form
-    return render_template('all_testimonial.html', messages=messages)  
+    page = request.args.get("page", 1, type=int)
+    paginate_object = Testimonial.query.paginate(page=int(page), per_page=2)
+
+    form = SimpleForm()
+    
+    if form.validate_on_submit():
+        testimonialID = request.form.get("id")
+
+        if request.form.get("button1"):
+            return redirect(url_for("updateTestimonial", id=testimonialID))
+
+        elif request.form.get("button2"):
+            testimonial = Testimonial.query.get(int(testimonialID))
+            db.session.delete(testimonial)
+            db.session.commit()
+
+            return redirect(url_for("all_testimonial"))
+        elif request.form.get("button3"):
+            testimonial = Testimonial.query.get(int(testimonialID))
+            if testimonial.state == "inactive":
+                testimonial.state = "active"
+            else:
+                testimonial.state = "inactive"
+
+            db.session.commit()
+
+            return redirect(url_for("all_testimonial"))
+            
+
+    return render_template('all_testimonial.html', paginate_object=paginate_object, form=form)  
 
 @app.route('/admin/messages', methods=["GET", "POST"])
 def messages():
@@ -152,7 +198,7 @@ def messages():
             message.state = "read"
             db.session.commit()
         
-        return redirect(url_for("messages")) if not request.args.get("page") else redirect(url_for("messages", page=request.args.get("page")))
+        return redirect(url_for("messages"))
 
 
     page = request.args.get("page", 1, type=int)
@@ -215,7 +261,13 @@ def detail_view(id):
     post = Post.query.get(id)
 
     path = url_for("static", filename="posts/images")
-    return render_template("page.html", post=post, path=path)
+
+    # visitors counter system
+    response = make_response(render_template("page.html", post=post, path=path))
+    did_visit = request.cookies.get("did_visit")
+    if not did_visit:
+        handle_new_visitor(response)
+    return response
 
 
 @app.route('/admin/updateImage/<id>', methods=['GET', 'POST'])
@@ -241,3 +293,28 @@ def updateImage(id):
     path = url_for("static", filename="posts/images")
 
     return render_template('update_image.html', form=form, post=post, path=path)
+
+
+@app.route('/admin/updateTestimonial/<id>', methods=['GET', 'POST'])
+def updateTestimonial(id):
+    form = UploadTestimonial()
+    testimonialID = id
+    testimonial = Testimonial.query.get(testimonialID)
+    if form.validate_on_submit():
+        testimonial.client_name = form.name.data
+        testimonial.client_work = form.work.data
+        testimonial.content = form.description.data
+
+        db.session.commit()
+
+        return redirect(url_for('updateTestimonial', id=testimonialID))
+    elif request.method == "GET":
+        form.name.data = testimonial.client_name
+        form.work.data = testimonial.client_work
+        form.description.data = testimonial.content
+
+
+    return render_template('update_testimonial.html', form=form, testimonial=testimonial)
+
+
+

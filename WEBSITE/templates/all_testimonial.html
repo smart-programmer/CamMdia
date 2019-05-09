@@ -1,5 +1,6 @@
 {% extends "layouts/_praivteLayout.html" %} {% block title %}
 <title> كل التوصيات</title>{% endblock %} {% block content %}
+{% for testimonial in paginate_object.items %}
 <div class="row">
     <div class="col-md-8 mx-auto" style="margin-top:2%;">
         <div class="card">
@@ -10,16 +11,13 @@
             <div class="card-body">
                 <div class="float-right">
                     <h3 class="card-text testimonial-content">
-                        {{ "testimonial.description" }}
+                        {{ testimonial.client_name }}
                     </h3>
-                    <h5 class="card-text testimonial-url">
-                        {{ "testimonial.url" }}
-                    </h5>
                     <h5 class="card-text filters">
-                        {{ "testimonial.filters" }}
+                        {{ testimonial.client_work }}
                     </h5>
                     <h5 class="card-text testimonial-date">
-                        {{ "testimonial.send_date" }}
+                        {{ testimonial.content }}
                     </h5>
                 </div>
 
@@ -31,24 +29,30 @@
             </div>
             <div class="card-footer">
                 <div class="btn-group float-right" role="group">
-                    <form action="">
-                        <form action="">
-                            <input type="button" class="btn btn-success" value=" Edit">
-                            <input type="button" class="btn btn-danger" value=" Delete">
+                        <form action="" method="POST">
+                            {{ form.hidden_tag() }}
+                            {{ form.button3(class="btn btn-info", value=testimonial.state) }}
+                            {{ form.button1(class="btn btn-success", value="Update") }}
+                            {{ form.button2(class="btn btn-danger", value="Delete") }}
+                            <input type="hidden" value="{{ testimonial.id }}" name="id">
                         </form>
-                    </form>
                 </div>
             </div>
         </div>
     </div>
 </div>
+{% endfor %}
 <nav aria-label="Page navigation example ">
     <ul class="pagination justify-content-center" style="margin-top:2%;">
-        <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-        <li class="page-item"><a class="page-link" href="#">1</a></li>
-        <li class="page-item"><a class="page-link" href="#">2</a></li>
-        <li class="page-item"><a class="page-link" href="#">3</a></li>
-        <li class="page-item"><a class="page-link" href="#">Next</a></li>
+        {% if paginate_object.has_prev %}
+        <li class="page-item"><a class="page-link" href="{{ url_for('all_testimonial', page=paginate_object.prev_num) }}">Previous</a></li>
+        {% endif %} {% for page_num in paginate_object.iter_pages(left_edge=2, right_edge=2, left_current=4, right_current=5) %} {% if page_num %}
+        <li class="page-item"><a class="page-link" href="{{ url_for('all_testimonial', page=page_num) }}">{{ page_num }}</a></li>
+        {% else %}
+        <li>...</li>
+        {% endif %} {% endfor %} {% if paginate_object.has_next %}
+        <li class="page-item"><a class="page-link" href="{{ url_for('all_testimonial', page=paginate_object.next_num) }}">Next</a></li>
+        {% endif %}
     </ul>
 </nav>
 {% endblock %}

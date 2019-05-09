@@ -7,8 +7,9 @@ class Message(db.Model):
     full_name = db.Column(db.String(255), unique=False, nullable=False)
     subject = db.Column(db.String(255), unique=False, nullable=True)
     email = db.Column(db.String(255), unique=False, nullable=False)
-    content = db.Column(db.String(1000), unique=False, nullable=False)
+    content = db.Column(db.String(1500), unique=False, nullable=False)
     state = db.Column(db.String(20), nullable=False, default="active") # read, active
+    message_date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
 
 
 
@@ -17,9 +18,19 @@ class Post(db.Model):
     image_string = db.Column(db.String(100), unique=True, nullable=False)
     category = db.Column(db.String(20), nullable=False)
     post_title = db.Column(db.String(255), nullable=False)
-    post_description = db.Column(db.String(600), nullable=True)
-    project_link = db.Column(db.String(255), nullable=True)
+    post_description = db.Column(db.String(1000), nullable=True)
+    project_link = db.Column(db.String(300), nullable=True)
     post_date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+
+
+
+class Testimonial(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    client_name = db.Column(db.String(100), nullable=False)
+    client_work = db.Column(db.String(100), nullable=False)
+    content = db.Column(db.String(300), nullable=False)
+    testimonial_date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    state = db.Column(db.String(20), nullable=False, default="inactive")# active, inactive
 
 
 

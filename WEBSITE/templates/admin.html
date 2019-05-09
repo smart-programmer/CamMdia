@@ -92,17 +92,17 @@
                     <!-- center left-->
                     <div class="col-md-7">
                         <a href="{{ url_for('messages') }}" class="btn btn-block">
-                            <div class="well"> صندوق الرسائل <span class="badge pull-right">"{{9}}"</span></div>
+                            <div class="well"> صندوق الرسائل الواردة<span class="badge pull-right">"{{ messages_count }}"</span></div>
                         </a>
 
                         <hr>
 
                         <div class="panel panel-default">
                             <div class="panel-heading text-center">
-                                <h3>عدد زوار الموقع</h3>
+                                <h3>عدد زوار الموقع التقريبي</h3>
                             </div>
                             <div class="panel-body">
-                                <h1 class="text-center ">{{125}}</h1>
+                                <h1 class="text-center ">{{ visitors }}</h1>
                             </div>
                             <!--/panel-body-->
                         </div>
