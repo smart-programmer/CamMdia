@@ -1842,3 +1842,45 @@ header {
         transform: scale(0);
     }
 }
+
+.myskills {
+    background: #34495e
+}
+
+h1 {
+    color: #e4e4e4
+}
+
+.skills>div {
+    margin-bottom: 20px;
+}
+
+.prog-box {
+    height: auto;
+    color: #e4e4e4;
+    margin: 10px auto;
+    position: relative;
+    border-bottom: 1px solid rgba(0, 0, 0, .3)
+}
+
+.prog-box>div {
+    width: 20px;
+    border-bottom: 1px solid #e4e4e4;
+    position: relative;
+}
+
+.prog-box>div span {
+    background: #e4e4e4;
+    text-align: center;
+    line-height: 30px;
+    color: #34495e;
+    width: 47px;
+    height: 30px;
+    border-radius: 5px;
+    display: block;
+    position: absolute;
+    right: 0;
+    bottom: -15px;
+    z-index: 1;
+    box-shadow: 3px 0 3px rgba(0, 0, 0, .5) inset, 3px 0 3px rgba(0, 0, 0, .5);
+}

@@ -116,3 +116,23 @@ $(window).load(function() {
     });
 
 });
+
+$(document).ready(function() {
+
+
+    $(".prog").each(function() {
+        var x = $(this).attr("data-prog");
+
+        $(this).animate({ width: x }, 3000, function() {
+
+            $(this).append("<span>" + x + "</span>");
+
+        });
+
+        $(this).css("width", $(this).attr("data-prog"));
+
+
+
+    });
+
+});
