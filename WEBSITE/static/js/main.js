@@ -1,5 +1,5 @@
 (function($) {
-    "use strict"
+    "use strict";
 
     ///////////////////////////
     // Preloader
@@ -83,56 +83,37 @@
     });
 
     $('#testimonial-slider').owlCarousel({
+        items: 1,
+        center: true,
         loop: true,
         margin: 15,
+        nav: true,
+        navText: ['<i class="fa fa-angle-left"></i>', '<i class="fa fa-angle-right"></i>'],
         dots: true,
-        nav: false,
         autoplay: true,
+        animateOut: 'fadeOut',
+        responsiveClass: true,
         responsive: {
             0: {
-                items: 1
+                items: 1,
+                nav: true
             },
-            992: {
-                items: 2
+            600: {
+                items: 2,
+                nav: false
             }
         }
     });
-
 })(jQuery);
 
 ///////////////////////////
-// Fillter
-$(window).load(function() {
-    var $container = $('.portfolioContainer');
-    $('.portfolioFilter a').click(function() {
-        $('.portfolioFilter .current').removeClass('current');
-        $(this).addClass('current');
-        var selector = $(this).attr('data-filter');
-        $container.isotope({
-
-            filter: selector,
-        });
-        return true;
-    });
-
-});
 
 $(document).ready(function() {
-
-
     $(".prog").each(function() {
-        var x = $(this).attr("data-prog");
-
-        $(this).animate({ width: x }, 3000, function() {
-
-            $(this).append("<span>" + x + "</span>");
-
+        var progressValue = $(this).attr("data-prog");
+        $(this).animate({ width: progressValue }, 3000, function() {
+            $(this).append("<span>" + progressValue + "</span>");
         });
-
         $(this).css("width", $(this).attr("data-prog"));
-
-
-
     });
-
 });

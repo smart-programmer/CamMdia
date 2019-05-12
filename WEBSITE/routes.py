@@ -54,6 +54,10 @@ def home():
         handle_new_visitor(response)
     return response
 
+@app.route('/developers', methods=['GET', 'POST'])
+def developers():
+    return render_template('develpors_page.html')
+    
 @app.route('/images', methods=['GET'])
 def images():
     path = url_for("static", filename="posts/images")

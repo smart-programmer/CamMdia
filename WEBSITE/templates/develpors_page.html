@@ -1,0 +1,69 @@
+{% extends "layouts/_publicLayout.html" %} {% block content %}
+
+<div id="team" class="section md-padding">
+
+    <!-- Container -->
+    <div class="container">
+
+        <!-- Row -->
+        <div class="row ">
+
+            <!-- Section header -->
+            <div class="section-header text-center">
+                <h2 class="title">فريق العمل </h2>
+            </div>
+            <!-- /Section header -->
+            <div class="row center-block text-center" style="float: none; margin: 0 auto;">
+
+                <!-- team -->
+                <div class="col-lg-6">
+                    <div class="team">
+                        <div class="team-img">
+                            <img class="img-responsive" src="{{ url_for('static', filename='img/team2.jpg') }}" alt="">
+                            <div class="overlay">
+                                <div class="team-social">
+                                    <a href="#"><i class="fa fa-facebook"></i></a>
+                                    <a href="#"><i class="fa fa-google-plus"></i></a>
+                                    <a href="#"><i class="fa fa-twitter"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="team-content">
+                            <h3>أحمد الطاهر</h3>
+                            <span>مبرمج و مصمم</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- /team -->
+
+                <!-- team -->
+                <div class="col-lg-6">
+                    <div class="team">
+                        <div class="team-img">
+                            <img class="img-responsive" src="{{ url_for('static', filename='img/team3.jpg') }}" alt="">
+                            <div class="overlay">
+                                <div class="team-social">
+                                    <a href="#"><i class="fa fa-facebook"></i></a>
+                                    <a href="#"><i class="fa fa-google-plus"></i></a>
+                                    <a href="#"><i class="fa fa-twitter"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="team-content">
+                            <h3>عمار المولد</h3>
+                            <span>مبرمج</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- /team -->
+            </div>
+
+        </div>
+        <!-- /Row -->
+
+    </div>
+    <!-- /Container -->
+
+</div>
+<!-- /Team -->
+{% endblock %}

@@ -206,7 +206,7 @@
         </div>
         <!-- /Row -->
         <div class="text-center">
-            <a href="{{ url_for('images') }}" class="main-btn">إستكشف الموقع</a>
+            <a href="{{ url_for('images') }}" class="main-btn">كل الصور </a>
         </div>
         <!-- /Container -->
 
@@ -370,7 +370,7 @@
         <div class="row">
 
             <!-- number -->
-            <div class="col-sm-3 col-xs-6">
+            <div class="col-sm-4 col-xs-6">
                 <div class="number">
                     <i class="fa fa-users"></i>
                     <h3 class="white-text"><span class="counter">451</span></h3>
@@ -380,7 +380,7 @@
             <!-- /number -->
 
             <!-- number -->
-            <div class="col-sm-3 col-xs-6">
+            <div class="col-sm-4 col-xs-6">
                 <div class="number">
                     <i class="fa fa-trophy"></i>
                     <h3 class="white-text"><span class="counter">12</span></h3>
@@ -389,18 +389,9 @@
             </div>
             <!-- /number -->
 
-            <!-- number -->
-            <div class="col-sm-3 col-xs-6">
-                <div class="number">
-                    <i class="fa fa-coffee"></i>
-                    <h3 class="white-text"><span class="counter">154</span>K</h3>
-                    <span class="white-text">فنجان من القهوة</span>
-                </div>
-            </div>
-            <!-- /number -->
 
             <!-- number -->
-            <div class="col-sm-3 col-xs-6">
+            <div class="col-sm-4 col-xs-6">
                 <div class="number">
                     <i class="fa fa-file"></i>
                     <h3 class="white-text"><span class="counter">45</span></h3>
@@ -431,69 +422,29 @@
                 <h2 class="title">فريق العمل </h2>
             </div>
             <!-- /Section header -->
+            <div class="row">
 
-            <!-- team -->
-            <div class="col-sm-4">
-                <div class="team">
-                    <div class="team-img">
-                        <img class="img-responsive" src="{{ url_for('static', filename='img/team1.jpg') }}" alt="">
-                        <div class="overlay">
-                            <div class="team-social">
-                                <a href="#"><i class="fa fa-facebook"></i></a>
-                                <a href="#"><i class="fa fa-google-plus"></i></a>
-                                <a href="#"><i class="fa fa-twitter"></i></a>
+                <!-- team -->
+                <div class="col-sm-8 center-block text-center" style="float: none; margin: 0 auto;">
+                    <div class="team">
+                        <div class="team-img">
+                            <img class="img-responsive" src="{{ url_for('static', filename='img/team1.jpg') }}" alt="">
+                            <div class="overlay">
+                                <div class="team-social">
+                                    <a href="#"><i class="fa fa-facebook"></i></a>
+                                    <a href="#"><i class="fa fa-google-plus"></i></a>
+                                    <a href="#"><i class="fa fa-twitter"></i></a>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="team-content">
-                        <h3>محمد أبو الخير</h3>
-                        <span>مصمم و المدير التنفيذي</span>
-                    </div>
-                </div>
-            </div>
-            <!-- /team -->
-
-            <!-- team -->
-            <div class="col-sm-4">
-                <div class="team">
-                    <div class="team-img">
-                        <img class="img-responsive" src="{{ url_for('static', filename='img/team2.jpg') }}" alt="">
-                        <div class="overlay">
-                            <div class="team-social">
-                                <a href="#"><i class="fa fa-facebook"></i></a>
-                                <a href="#"><i class="fa fa-google-plus"></i></a>
-                                <a href="#"><i class="fa fa-twitter"></i></a>
-                            </div>
+                        <div class="team-content">
+                            <h3>محمد أبو الخير</h3>
+                            <span>مصمم و المدير التنفيذي</span>
                         </div>
                     </div>
-                    <div class="team-content">
-                        <h3>أحمد الطاهر</h3>
-                        <span>مبرمج و مصمم</span>
-                    </div>
                 </div>
+                <!-- /team -->
             </div>
-            <!-- /team -->
-
-            <!-- team -->
-            <div class="col-sm-4">
-                <div class="team">
-                    <div class="team-img">
-                        <img class="img-responsive" src="{{ url_for('static', filename='img/team3.jpg') }}" alt="">
-                        <div class="overlay">
-                            <div class="team-social">
-                                <a href="#"><i class="fa fa-facebook"></i></a>
-                                <a href="#"><i class="fa fa-google-plus"></i></a>
-                                <a href="#"><i class="fa fa-twitter"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="team-content">
-                        <h3>عمار المولد</h3>
-                        <span>مبرمج</span>
-                    </div>
-                </div>
-            </div>
-            <!-- /team -->
 
         </div>
         <!-- /Row -->
@@ -521,28 +472,18 @@
             <!-- Testimonial slider -->
             <div class="col-md-10 col-md-offset-1">
                 <div id="testimonial-slider" class="owl-carousel owl-theme">
-
-                    <!-- testimonial -->
-                    <div class="testimonial">
-                        <div class="testimonial-meta">
-                            <img src="{{ url_for('static', filename='img/perso1.jpg') }}" alt="">
-                            <h3 class="white-text">John Doe</h3>
-                            <span>Web Designer</span>
-                        </div>
-                        <p class="white-text">Molestie at elementum eu facilisis sed odio. Scelerisque in dictum non consectetur a erat. Aliquam id diam maecenas ultricies mi eget mauris.</p>
-                    </div>
-                    <!-- /testimonial -->
-
+                    {% for testimonial in testimonials %}
                     <!-- testimonial -->
                     <div class="testimonial">
                         <div class="testimonial-meta">
                             <img src="{{ url_for('static', filename='img/perso2.jpg') }}" alt="">
-                            <h3 class="white-text">John Doe</h3>
-                            <span>Web Designer</span>
+                            <h3 class="white-text">{{testimonial.client_name}}</h3>
+                            <span>{{testimonial.client_work}}</span>
                         </div>
-                        <p class="white-text">Molestie at elementum eu facilisis sed odio. Scelerisque in dictum non consectetur a erat. Aliquam id diam maecenas ultricies mi eget mauris.</p>
+                        <p class="white-text">{{testimonial.content}}</p>
                     </div>
                     <!-- /testimonial -->
+                    {% endfor %}
 
                 </div>
             </div>
@@ -656,7 +597,8 @@
 
                 <!-- footer copyright -->
                 <div class="footer-copyright">
-                    <p>حقوق الطبع والنشر © 2018. جميع الحقوق محفوظة.</p>
+                    <p>حقوق الطبع والنشر © 2018. جميع الحقوق محفوظة. <a href="{{ url_for('developers') }}"> صفحة المطورين</a>
+                    </p>
                 </div>
                 <!-- /footer copyright -->
 
