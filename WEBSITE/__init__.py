@@ -6,12 +6,12 @@ from flask_mail import Mail
 import os
 
 app = Flask(__name__)
-if os.environ.get("SECRET_KEY") and os.environ.get("DATABASE_URL"):
-    app.config["SECRET_KEY"] = os.environ.get("SECRET_KEY")
-    app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DATABASE_URL")
-else:
-    app.config["SECRET_KEY"] = "AAA2002AAA"
-    app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///../sqlite.db"
+# if os.environ.get("SECRET_KEY") and os.environ.get("DATABASE_URL"):
+app.config["SECRET_KEY"] = os.environ.get("SECRET_KEY")
+app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DATABASE_URL")
+# else:
+#     app.config["SECRET_KEY"] = "AAA2002AAA"
+#     app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///../sqlite.db"
     # NOTE: the flask migration moudle/package database url must be relative to the file that will be run when migrating offline which in this case is run.py, that's why in the env file the directory is different then in here.
 
 db = SQLAlchemy(app)
