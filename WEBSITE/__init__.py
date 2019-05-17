@@ -6,7 +6,6 @@ from flask_mail import Mail
 import os
 
 app = Flask(__name__)
-'postgres://zgtaeayjeupaqn:543b4f4d7e8de3bd3b16978449c96f8f242f2f2ebc4993bd81dfeec438f24901@ec2-54-163-230-199.compute-1.amazonaws.com:5432/dr4ahru7noros'
 if os.environ.get("SECRET_KEY") and os.environ.get("DATABASE_URL"):
     app.config["SECRET_KEY"] = os.environ.get("SECRET_KEY")
     app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DATABASE_URL")
