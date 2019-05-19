@@ -43,11 +43,11 @@ def save_image_online(image_file, path):
 
 		image_filename, local_path = save_image(image_file, path)
 
-		my_bucket.upload_file(Filename=local_path, Key=image_filename)
+		my_bucket.upload_file(Filename=local_path, Key="ammar")#image_filename
 
 		os.remove(local_path)
 
-		s3_path = "https://s3.console.aws.amazon.com/s3/object/cam-media-static-files/" + image_filename
+		s3_path = "https://s3.console.aws.amazon.com/s3/object/cam-media-static-files/" + "ammar"
 		
 		return image_filename, s3_path
 
