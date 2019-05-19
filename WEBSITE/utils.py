@@ -30,7 +30,7 @@ def save_image(image_file, path):
 
 	## image_file.save(image_path)
 
-	return image_filename
+	return image_filename, image_path
 
 	#return None
 
@@ -41,21 +41,15 @@ def save_image_online(image_file, path):
 		s3_resource = boto3.resource('s3')
 		my_bucket = s3_resource.Bucket("cam-media-static-files")
 
-		# create a random name
-		random_hex = secrets.token_hex(20)
+		image_filename, local_path = save_image(image_file, path)
 
-		# get file extention via os module
-		_, extention = os.path.splitext(image_file.filename)
+		my_bucket.upload_file(Filename=local_path, Key=image_filename)
 
-		# create image name
-		image_filename = random_hex + extention
+		os.remove(local_path)
 
-		# specify image path
-		image_path = os.path.join(app.root_path, path, image_filename)
-
-		my_bucket.upload_file(image_file, image_filename)
+		s3_path = "https://s3.console.aws.amazon.com/s3/buckets/cam-media-static-files/"
 		
-		return image_filename
+		return image_filename, s3_path
 
 
 	else:
