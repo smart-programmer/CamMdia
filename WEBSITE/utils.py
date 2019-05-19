@@ -6,7 +6,7 @@ import datetime
 import boto3
 
 
-def save_image(image_file, path):
+def save_image_locally(image_file, path):
 
 	#if image_file:
 	
@@ -35,25 +35,29 @@ def save_image(image_file, path):
 	#return None
 
 
-def save_image_online(image_file, path):
+def save_image(image_file, path):
 	if os.environ.get("online"):	
+		# connect to s3
 		# s3_client = boto3.client('s3')
 		s3_resource = boto3.resource('s3')
 		my_bucket = s3_resource.Bucket("cam-media-static-files")
 
-		image_filename, local_path = save_image(image_file, path)
+		# save image locally
+		image_filename, local_path = save_image_locally(image_file, path)
 
+		# upload image to s3 
 		my_bucket.upload_file(Filename=local_path, Key=image_filename)
 
+		# remove image from local machine
 		os.remove(local_path)
 
-		s3_path = "https://cam-media-static-files.s3.amazonaws.com/" + image_filename
+		s3_path = "https://s3-us-west-2.amazonaws.com/cam-media-static-files/" + image_filename #or: https://cam-media-static-files.s3.amazonaws.com/
 		
 		return image_filename, s3_path
 
 
 	else:
-		save_image(image_file, path)
+		save_image_locally(image_file, path)
 
 
 

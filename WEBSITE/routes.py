@@ -4,7 +4,7 @@ from WEBSITE import app, db, bcrypt, mail, MAIL_USERNAME
 from WEBSITE.forms import MessageForm, LoginForm, UploadImage, UploadTestimonial, ReplyForm, SimpleForm
 from WEBSITE import errors
 from WEBSITE.models import Message, Post, Testimonial, User
-from WEBSITE.utils import save_image, handle_new_visitor, get_visitors_file, save_image_online
+from WEBSITE.utils import save_image, handle_new_visitor, get_visitors_file, save_image_locally
 from flask_login import current_user, login_user, login_required, logout_user
 
 
@@ -127,7 +127,7 @@ def uploadImage():
         description = form.description.data
         category = form.filters.data
         url = form.url.data
-        image_string, image_path = save_image_online(form.image.data, "static/posts/images") # save_image(form.image.data, "static/posts/images")
+        image_string, image_path = save_image(form.image.data, "static/posts/images") # save_image(form.image.data, "static/posts/images")
 
         post = Post(image_string=image_string, image_path=image_path, category=category, post_title=title,
         post_description=description, project_link=url)

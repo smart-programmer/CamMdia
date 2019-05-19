@@ -54,7 +54,7 @@
                     {% for image in images %}
                     <!-- Work -->
                     <div class="col-md-4 col-xs-6 work {{image.category}}">
-                        <img class="img-responsive" src="{{ path }}/{{image.image_string}}" alt="">
+                        <img class="img-responsive" src="{{ post.image_path }}" alt="">
                         <div class="overlay"></div>
                         <div class="work-content">
                             <span>{{image.category}}</span>
