@@ -3,6 +3,7 @@ import secrets
 from WEBSITE import app
 from PIL import Image
 import datetime
+import boto3
 
 
 def save_image(image_file, path):
@@ -32,6 +33,34 @@ def save_image(image_file, path):
 	return image_filename
 
 	#return None
+
+
+def save_image_online(image_file, path):
+	if os.environ.get("online"):	
+		# s3_client = boto3.client('s3')
+		s3_resource = boto3.resource('s3')
+		my_bucket = s3_resource.Bucket("cam-media-static-files")
+
+		# create a random name
+		random_hex = secrets.token_hex(20)
+
+		# get file extention via os module
+		_, extention = os.path.splitext(image_file.filename)
+
+		# create image name
+		image_filename = random_hex + extention
+
+		# specify image path
+		image_path = os.path.join(app.root_path, path, image_filename)
+
+		my_bucket.upload_file(image_file, image_filename)
+		
+		return image_filename
+
+
+	else:
+		save_image(image_file, path)
+
 
 
 def handle_new_visitor(response):

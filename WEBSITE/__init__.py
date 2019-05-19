@@ -6,7 +6,7 @@ from flask_mail import Mail
 import os
 
 app = Flask(__name__)
-if os.environ.get("SECRET_KEY") and os.environ.get("DATABASE_URL"):
+if os.environ.get("online"):
     app.config["SECRET_KEY"] = os.environ.get("SECRET_KEY")
     app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DATABASE_URL")
 else:
