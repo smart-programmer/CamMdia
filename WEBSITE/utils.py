@@ -47,7 +47,7 @@ def save_image_online(image_file, path):
 
 		os.remove(local_path)
 
-		s3_path = "https://s3.console.aws.amazon.com/s3/buckets/cam-media-static-files/"
+		s3_path = "https://s3.console.aws.amazon.com/s3/object/cam-media-static-files/" + image_filename
 		
 		return image_filename, s3_path
 

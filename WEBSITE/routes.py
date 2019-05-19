@@ -129,7 +129,7 @@ def uploadImage():
         url = form.url.data
         image_string, image_path = save_image_online(form.image.data, "static/posts/images") # save_image(form.image.data, "static/posts/images")
 
-        post = Post(image_string=image_string, category=category, post_title=title,
+        post = Post(image_string=image_string, image_path=image_path, category=category, post_title=title,
         post_description=description, project_link=url)
 
         db.session.add(post)
