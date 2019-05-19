@@ -51,7 +51,7 @@ def save_image(image_file, path):
 		# remove image from local machine
 		os.remove(local_path)
 
-		s3_path = "https://s3-us-west-2.amazonaws.com/cam-media-static-files/" + image_filename #or: https://cam-media-static-files.s3.amazonaws.com/
+		s3_path = "https://s3-us-west-2.amazonaws.com/cam-media-static-files/" + image_filename # or: https://cam-media-static-files.s3.amazonaws.com/
 		
 		return image_filename, s3_path
 
@@ -60,6 +60,9 @@ def save_image(image_file, path):
 		save_image_locally(image_file, path)
 
 
+def delete_s3_object(object_name):
+	s3_resource = boto3.resource('s3')
+	s3_resource.Object('cam-media-static-files', object_name).delete()
 
 def handle_new_visitor(response):
 	expire_date = datetime.datetime.now()

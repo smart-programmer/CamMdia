@@ -4,7 +4,7 @@ from WEBSITE import app, db, bcrypt, mail, MAIL_USERNAME
 from WEBSITE.forms import MessageForm, LoginForm, UploadImage, UploadTestimonial, ReplyForm, SimpleForm
 from WEBSITE import errors
 from WEBSITE.models import Message, Post, Testimonial, User
-from WEBSITE.utils import save_image, handle_new_visitor, get_visitors_file, save_image_locally
+from WEBSITE.utils import save_image, handle_new_visitor, get_visitors_file, save_image_locally, delete_s3_object
 from flask_login import current_user, login_user, login_required, logout_user
 
 
@@ -168,6 +168,7 @@ def all_images():
 
         elif request.form.get("button2"):
             post = Post.query.get(int(postID))
+            delete_s3_object(post.image_string)
             db.session.delete(post)
             db.session.commit()
             return redirect(url_for("all_images"))
