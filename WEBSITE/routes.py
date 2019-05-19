@@ -4,7 +4,7 @@ from WEBSITE import app, db, bcrypt, mail, MAIL_USERNAME
 from WEBSITE.forms import MessageForm, LoginForm, UploadImage, UploadTestimonial, ReplyForm, SimpleForm
 from WEBSITE import errors
 from WEBSITE.models import Message, Post, Testimonial, User
-from WEBSITE.utils import save_image, handle_new_visitor, get_visitors_file
+from WEBSITE.utils import save_image, handle_new_visitor, get_visitors_file, save_image_online
 from flask_login import current_user, login_user, login_required, logout_user
 
 
