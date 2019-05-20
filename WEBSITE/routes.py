@@ -77,7 +77,7 @@ def images():
         handle_new_visitor(response)
     return response
 
-@app.route('/admin')
+@app.route('/admin', methods=["GET"])
 @login_required
 def admin():
     # get visitors count
