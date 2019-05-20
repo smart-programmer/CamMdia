@@ -103,3 +103,7 @@ venv.bak/
 
 # mypy
 .mypy_cache/
+
+
+# env stuff
+S:\abo-la5\abo-al5\src\WEBSITE\static\visitors.txt
