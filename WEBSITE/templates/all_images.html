@@ -12,12 +12,15 @@
                     <h3 class="card-text image-content">
                         {{ image.post_description }}
                     </h3>
+                    <hr>
                     <h5 class="card-text image-url">
                         {{ image.project_link }}
                     </h5>
+                    <hr>
                     <h5 class="card-text filters">
                         {{ image.category }}
                     </h5>
+                    <hr>
                     <h5 class="card-text image-date">
                         {{ image.post_date }}
                     </h5>
@@ -31,12 +34,10 @@
             </div>
             <div class="card-footer">
                 <div class="btn-group float-right" role="group">
-                        <form action="" method="POST">
-                            {{ form.hidden_tag() }}
-                            {{ form.button1(class="btn btn-success", value="Update") }}
-                            {{ form.button2(class="btn btn-danger", value="Delete") }}
-                            <input type="hidden" value="{{ image.id }}" name="id">
-                        </form>
+                    <form action="" method="POST">
+                        {{ form.hidden_tag() }} {{ form.button1(class="btn btn-success", value="Update") }} {{ form.button2(class="btn btn-danger", value="Delete") }}
+                        <input type="hidden" value="{{ image.id }}" name="id">
+                    </form>
                 </div>
 
             </div>

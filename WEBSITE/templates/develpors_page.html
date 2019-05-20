@@ -1,69 +1,92 @@
 {% extends "layouts/_publicLayout.html" %} {% block content %}
-
-<div id="team" class="section md-padding">
-
-    <!-- Container -->
-    <div class="container">
-
-        <!-- Row -->
-        <div class="row ">
-
-            <!-- Section header -->
-            <div class="section-header text-center">
-                <h2 class="title">فريق العمل </h2>
+<header id="home">
+    <!-- Background Image -->
+    <div class="bg-img" style="background-image: url('./img/background1.jpg');">
+        <div class="overlay"></div>
+    </div>
+    <!-- /Background Image -->
+    <!-- /Background Image -->
+    <nav id="nav" class="navbar nav-transparent">
+        <div class="container">
+            <div class="navbar-header">
+                <!-- Logo -->
+                <div class="navbar-brand">
+                    <a href="{{ url_for('home') }}">
+                        <img class="logo" src="{{ url_for('static', filename='img/logo.png') }}" alt="logo">
+                        <img class="logo-alt" src="{{ url_for('static', filename='img/logo-alt.png') }}" alt="logo">
+                    </a>
+                </div>
+                <!-- /Logo -->
             </div>
-            <!-- /Section header -->
-            <div class="row center-block text-center" style="float: none; margin: 0 auto;">
+        </div>
+    </nav>
+    <!-- /Nav -->
+    <div id="team" class="section md-padding bg-grey">
 
-                <!-- team -->
-                <div class="col-lg-6">
-                    <div class="team">
-                        <div class="team-img">
-                            <img class="img-responsive" src="{{ url_for('static', filename='img/team2.jpg') }}" alt="">
-                            <div class="overlay">
-                                <div class="team-social">
-                                    <a href="#"><i class="fa fa-facebook"></i></a>
-                                    <a href="#"><i class="fa fa-google-plus"></i></a>
-                                    <a href="#"><i class="fa fa-twitter"></i></a>
+        <!-- Container -->
+        <div class="container">
+
+            <!-- Row -->
+            <div class="row ">
+
+                <!-- Section header -->
+                <div class="section-header text-center">
+                    <h2 class="title">فريق العمل </h2>
+                </div>
+                <!-- /Section header -->
+                <div class="row center-block text-center" style="float: none; margin: 0 auto;">
+
+                    <!-- team -->
+                    <div class="col-lg-6">
+                        <div class="team">
+                            <div class="team-img">
+                                <img class="img-responsive" src="{{ url_for('static', filename='img/team2.jpg') }}" alt="">
+                                <div class="overlay">
+                                    <div class="team-social">
+                                        <a href="#"><i class="fa fa-facebook"></i></a>
+                                        <a href="#"><i class="fa fa-google-plus"></i></a>
+                                        <a href="#"><i class="fa fa-twitter"></i></a>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="team-content">
-                            <h3>أحمد الطاهر</h3>
-                            <span>مبرمج و مصمم</span>
-                        </div>
-                    </div>
-                </div>
-                <!-- /team -->
-
-                <!-- team -->
-                <div class="col-lg-6">
-                    <div class="team">
-                        <div class="team-img">
-                            <img class="img-responsive" src="{{ url_for('static', filename='img/team3.jpg') }}" alt="">
-                            <div class="overlay">
-                                <div class="team-social">
-                                    <a href="#"><i class="fa fa-facebook"></i></a>
-                                    <a href="#"><i class="fa fa-google-plus"></i></a>
-                                    <a href="#"><i class="fa fa-twitter"></i></a>
-                                </div>
+                            <div class="team-content">
+                                <h3>أحمد الطاهر</h3>
+                                <span>مبرمج و مصمم</span>
                             </div>
                         </div>
-                        <div class="team-content">
-                            <h3>عمار المولد</h3>
-                            <span>مبرمج</span>
+                    </div>
+                    <!-- /team -->
+
+                    <!-- team -->
+                    <div class="col-lg-6">
+                        <div class="team">
+                            <div class="team-img">
+                                <img class="img-responsive" src="{{ url_for('static', filename='img/team3.jpg') }}" alt="">
+                                <div class="overlay">
+                                    <div class="team-social">
+                                        <a href="#"><i class="fa fa-facebook"></i></a>
+                                        <a href="#"><i class="fa fa-google-plus"></i></a>
+                                        <a href="#"><i class="fa fa-twitter"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="team-content">
+                                <h3>عمار المولد</h3>
+                                <span>مبرمج</span>
+                            </div>
                         </div>
                     </div>
+                    <!-- /team -->
                 </div>
-                <!-- /team -->
+
             </div>
+            <!-- /Row -->
 
         </div>
-        <!-- /Row -->
+        <!-- /Container -->
 
     </div>
-    <!-- /Container -->
-
-</div>
-<!-- /Team -->
+    <!-- /Team -->
+    {% include "layouts/_footerLayout.html" %}
+</header>
 {% endblock %}

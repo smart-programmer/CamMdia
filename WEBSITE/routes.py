@@ -78,6 +78,7 @@ def images():
     return response
 
 @app.route('/admin')
+@app.route('/admin/')
 @login_required
 def admin():
     # get visitors count
