@@ -12,16 +12,14 @@
             </h5>
             <div class="card-body">
                 <p class="card-text">
-                    {{ message.email }} {{ message.content }}
+                    {{ message.email }}
+                    <p>{{ message.content }}</p>
                 </p>
             </div>
             <div class="card-footer">
                 <div class="btn-group float-right" role="group">
                     <form action='' method="POST">
-                        {{ form.hidden_tag() }}
-                        {{ form.button1(class="btn btn-success", value="Reply") }}
-                        {{ form.button2(class="btn btn-danger", value="Delete") }}
-                        {{ form.button3(class="btn btn-danger", value="Mark as read") }}
+                        {{ form.hidden_tag() }} {{ form.button1(class="btn btn-success", value="Reply") }} {{ form.button2(class="btn btn-danger", value="Delete") }} {{ form.button3(class="btn btn-danger", value="Mark as read") }}
                         <input type="hidden" value="{{ message.id }}" name="id">
                     </form>
                 </div>

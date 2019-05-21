@@ -1,6 +1,4 @@
-{% extends "layouts/_praivteLayout.html" %} {% block title %}
-<title> كل التوصيات</title>{% endblock %} {% block content %}
-{% for testimonial in paginate_object.items %}
+{% extends "layouts/_praivteLayout.html" %} {% block title %} كل التوصيات{% endblock %} {% block content %} {% for testimonial in paginate_object.items %}
 <div class="row">
     <div class="col-md-8 mx-auto" style="margin-top:2%;">
         <div class="card">
@@ -21,21 +19,13 @@
                     </h5>
                 </div>
 
-
-                <div>
-                    <img src="https://placehold.it/70/70" class="img img-fluid rounded float-left img-thumbnail" alt="..." style="width:20%">
-
-                </div>
             </div>
             <div class="card-footer">
                 <div class="btn-group float-right" role="group">
-                        <form action="" method="POST">
-                            {{ form.hidden_tag() }}
-                            {{ form.button3(class="btn btn-info", value=testimonial.state) }}
-                            {{ form.button1(class="btn btn-success", value="Update") }}
-                            {{ form.button2(class="btn btn-danger", value="Delete") }}
-                            <input type="hidden" value="{{ testimonial.id }}" name="id">
-                        </form>
+                    <form action="" method="POST">
+                        {{ form.hidden_tag() }} {{ form.button3(class="btn btn-info", value=testimonial.state) }} {{ form.button1(class="btn btn-success", value="Update") }} {{ form.button2(class="btn btn-danger", value="Delete") }}
+                        <input type="hidden" value="{{ testimonial.id }}" name="id">
+                    </form>
                 </div>
             </div>
         </div>

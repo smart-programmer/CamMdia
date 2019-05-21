@@ -1,27 +1,11 @@
-{% extends "layouts/_uploadLayout.html" %} {% block content %}
+{% extends "layouts/_uploadLayout.html" %}{% block head %} تعديل على توصية {% endblock %} {% block content %}
 <div class="container ">
-    <h1 class="text-primary">إضافة صورة أخرى <span class="glyphicon glyphicon-user"></span></h1>
+    <h1 class="text-primary text-center"> عدل التوصية <span class="glyphicon glyphicon-wrench"></span></h1>
     <hr>
     <div class="row">
-        <!-- left column -->
-        <!-- <div class="col-md-3">
-            <div class="text-center">
-                <img src="https://placehold.it/70/70" class=" img-circle img-responsive center-block" alt="avatar">
-                <h3>إرفع صورة أخرى</h3>
-                <h4>70 * 70 يفضل</h4> <input type="file" class="form-control" onchange="previewFile()">
-            </div>
-        </div> -->
-        <!-- edit form column -->
         <div class="col-md-12 personal-info">
             <h3>بيانات الصورة </h3>
             <form class="form-horizontal" role="form" action="" method="POST"> {{ form.hidden_tag() }}
-                <div class="col-md-3">
-                    <div class="text-center">
-                        <img src="https://placehold.it/70/70" class=" img-circle img-responsive center-block" alt="avatar">
-                        <h3>إرفع صورة أخرى</h3>
-                        <h4>70 * 70 يفضل</h4> <input type="file" class="form-control" onchange="previewFile()">
-                    </div>
-                </div>
                 <div class="col-md-9">
                     <div class="form-group">
                         <div class="col-lg-8"> {{ form.name(class="form-control", placeholder="فلان بن فلان") }} {% for error in form.name.errors %} <span id="helpBlock" class="help-block">{{ error }}</span> {% endfor %} </div> <label class="col-lg-3 control-label"> اسم العميل</label>
