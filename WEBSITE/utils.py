@@ -29,7 +29,10 @@ def save_image_locally(image_file, path):
 
 	## image_file.save(image_path)
 
-	return image_filename, url_for("static", filename="posts/images/"+ image_filename) # a new url for the local image is returned here because the images_path variable has a url relative to the whole os which is ok when we save the image but when displaying the image on the server we need a path relative to the server not the os which is what url_for returns
+	if os.environ.get("online"):
+		image_filename, image_path
+	else:
+		return image_filename, url_for("static", filename="posts/images/"+ image_filename) # a new url for the local image is returned here because the images_path variable has a url relative to the whole os which is ok when we save the image but when displaying the image on the server we need a path relative to the server not the os which is what url_for returns
 
 
 
