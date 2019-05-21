@@ -20,8 +20,6 @@ def home():
     images.reverse()
     images = images[:15]
 
-    path = url_for("static", filename="posts/images")
-
     form = MessageForm()
     if form.validate_on_submit():
         full_name = form.full_name.data
@@ -47,7 +45,7 @@ def home():
         return redirect(url_for("home"))
 
     # visitors counter system
-    response = make_response(render_template('index.html', form=form, images=images, path=path,
+    response = make_response(render_template('index.html', form=form, images=images,
     testimonials=testimonials))
     did_visit = request.cookies.get("did_visit")
     if not did_visit:
@@ -127,7 +125,7 @@ def uploadImage():
         description = form.description.data
         category = form.filters.data
         url = form.url.data
-        image_string, image_path = save_image(form.image.data, "static/posts/images") # save_image(form.image.data, "static/posts/images")
+        image_string, image_path = save_image(form.image.data, "static/posts/images")
 
         post = Post(image_string=image_string, image_path=image_path, category=category, post_title=title,
         post_description=description, project_link=url)
@@ -168,7 +166,7 @@ def all_images():
 
         elif request.form.get("button2"):
             post = Post.query.get(int(postID))
-            delete_s3_object(post.image_string)
+            delete_s3_object(post.image_string, post.image_path)
             db.session.delete(post)
             db.session.commit()
             return redirect(url_for("all_images"))

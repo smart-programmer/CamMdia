@@ -1,4 +1,5 @@
 import os
+from flask import url_for
 import secrets
 from WEBSITE import app
 from PIL import Image
@@ -7,8 +8,6 @@ import boto3
 
 
 def save_image_locally(image_file, path):
-
-	#if image_file:
 	
 	# create a random name
 	random_hex = secrets.token_hex(20)
@@ -30,9 +29,8 @@ def save_image_locally(image_file, path):
 
 	## image_file.save(image_path)
 
-	return image_filename, image_path
+	return image_filename, url_for("static", filename="posts/images/"+ image_filename) # a new url for the local image is returned here because the images_path variable has a url relative to the whole os which is ok when we save the image but when displaying the image on the server we need a path relative to the server not the os which is what url_for returns
 
-	#return None
 
 
 def save_image(image_file, path):
@@ -57,12 +55,16 @@ def save_image(image_file, path):
 
 
 	else:
-		save_image_locally(image_file, path)
+		return save_image_locally(image_file, path)
 
 
-def delete_s3_object(object_name):
-	s3_resource = boto3.resource('s3')
-	s3_resource.Object('cam-media-static-files', object_name).delete()
+def delete_s3_object(object_name, object_path):
+	if os.environ.get("online"):
+		s3_resource = boto3.resource('s3')
+		s3_resource.Object('cam-media-static-files', object_name).delete()
+	else:
+		local_image_path = app.root_path + object_path # the function os.path.join didn't work here, NOTE: see the comment in the "save_image_locally" function to know why we need a new image path relative to the os to delete the image
+		os.remove(local_image_path)
 
 def handle_new_visitor(response):
 	expire_date = datetime.datetime.now()
