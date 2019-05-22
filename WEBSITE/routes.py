@@ -297,7 +297,7 @@ def detail_view(id):
     path = url_for("static", filename="posts/images")
 
     # visitors counter system
-    response = make_response(render_template("page.html", post=post, path=path))
+    response = make_response(render_template("image_details.html", post=post, path=path))
     did_visit = request.cookies.get("did_visit")
     if not did_visit:
         handle_new_visitor(response)
@@ -353,4 +353,20 @@ def updateTestimonial(id):
     return render_template('update_testimonial.html', form=form, testimonial=testimonial)
 
 
+@app.route('/admin/list_of_admins', methods=["GET", "POST"])
+@login_required
+def list_of_admins():
+    return render_template('list_of_admins.html')  
 
+@app.route('/admin/register_admin', methods=["GET", "POST"])
+@login_required
+def register_admin():
+    return render_template('register_admin.html')  
+
+
+@app.route('/admin/edit_admin', methods=["GET", "POST"])
+@login_required
+def edit_admin():
+    return render_template('edit_admin.html')  
+
+    

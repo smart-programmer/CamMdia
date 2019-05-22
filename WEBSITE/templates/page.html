@@ -18,6 +18,10 @@
             margin: 0;
         }
         
+        img {
+            width: 50%;
+        }
+        
         .hide {
             display: none;
         }
@@ -194,12 +198,12 @@
         }
         
         .post-widget-image img {
-            width: 50%;
+            width: 200%;
         }
         
         @media (min-width: 600px) {
             .post-widget-image img {
-                width: 100%;
+                width: 200%;
             }
         }
         
@@ -282,12 +286,14 @@
                     </div>
                     <div class="post-widget" property="new-widget" mv-multiple="mv-multiple">
                         <header class="post-widget-header">
-                            <a href="{{ post.project_link }}"><h3 property="widget-header" mv-default="Widget Header">{{ post.project_link }}</h3></a>
+                            <a href="{{ post.project_link }}">
+                                <h3 property="widget-header" mv-default="Widget Header">{{ post.project_link }}</h3>
+                            </a>
                             <h3 property="widget-header" mv-default="Widget Header">{{ post.post_date }}</h3>
                         </header>
                         <div class="post-widget-text">
                             <article class="markdown" property="widget-text" mv-default="Lorem ipsum dolor sit amet consectetur adipisicing elit. Delectus rerum libero enim commodi expedita molestiae, modi veniam at vero est!">
-                                </article>
+                            </article>
                         </div>
                     </div>
                 </aside>
