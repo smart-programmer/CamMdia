@@ -357,7 +357,6 @@ def updateTestimonial(id):
 @login_required
 def list_of_admins():
     users = User.query.all()
-
     return render_template('list_of_admins.html', users=users)  
 
 @app.route('/admin/register_admin', methods=["GET", "POST"])
