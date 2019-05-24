@@ -88,7 +88,7 @@
                             <thead>
                                 <tr>
                                     <th><span>User</span></th>
-                                    <th><span>Created</span></th>
+                                    <th><span>Username</span></th>
                                     <th class="text-center"><span>Status</span></th>
                                     <th><span>Email</span></th>
                                     <th>&nbsp;</th>
@@ -96,17 +96,18 @@
                             </thead>
                             <tbody>
                                 <tr>
+                                    {% for user in users %}
                                     <td>
                                         <img src="https://bootdey.com/img/Content/user_1.jpg" alt="">
-                                        <a href="#" class="user-link">Full name 1</a>
+                                        <a href="#" class="user-link">{{ user.full_name }}</a>
                                         <span class="user-subhead">Member</span>
                                     </td>
-                                    <td>2013/08/12</td>
+                                    <td>{{ user.username }}</td>
                                     <td class="text-center">
                                         <span class="label label-default">pending</span>
                                     </td>
                                     <td>
-                                        <a href="#">marlon@brando.com</a>
+                                        <a href="#">{{ user.email }}</a>
                                     </td>
                                     <td style="width: 20%;">
                                         <a href="#" class="table-link">
@@ -129,6 +130,7 @@
                                         </a>
                                     </td>
                                 </tr>
+                                {% endfor %}
                             </tbody>
                         </table>
                     </div>

@@ -1,7 +1,7 @@
 from flask import Flask, request, redirect, render_template, url_for, make_response
 from flask_mail import Message as MailMessage
 from WEBSITE import app, db, bcrypt, mail, MAIL_USERNAME
-from WEBSITE.forms import MessageForm, LoginForm, UploadImage, UploadTestimonial, ReplyForm, SimpleForm
+from WEBSITE.forms import MessageForm, LoginForm, UploadImage, UploadTestimonial, ReplyForm, SimpleForm, UserForm
 from WEBSITE import errors
 from WEBSITE.models import Message, Post, Testimonial, User
 from WEBSITE.utils import save_image, handle_new_visitor, get_visitors_file, save_image_locally, delete_s3_object
@@ -356,12 +356,32 @@ def updateTestimonial(id):
 @app.route('/admin/list_of_admins', methods=["GET", "POST"])
 @login_required
 def list_of_admins():
-    return render_template('list_of_admins.html')  
+    users = User.query.all()
+
+    return render_template('list_of_admins.html', users=users)  
 
 @app.route('/admin/register_admin', methods=["GET", "POST"])
 @login_required
 def register_admin():
-    return render_template('register_admin.html')  
+    form = UserForm()
+    if form.validate_on_submit():
+        username = form.username.data
+        full_name = form.full_name.data
+        email = form.email.data
+        password = bcrypt.generate_password_hash(form.password.data).decode("utf-8")
+        
+        user = User(username=username, full_name=full_name, email=email, password=password)
+
+        db.session.add(user)
+        db.session.commit()
+
+        return redirect("admin")
+    else:
+        form.username.data = ""
+        form.full_name.data = ""
+        form.email.data = ""
+        form.password.data = ""
+    return render_template('register_admin.html', form=form)  
 
 
 @app.route('/admin/edit_admin', methods=["GET", "POST"])

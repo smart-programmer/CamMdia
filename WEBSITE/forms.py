@@ -65,6 +65,14 @@ class ReplyForm(FlaskForm):
     submit = wtforms.SubmitField("أرسل")
 
 
+class UserForm(FlaskForm):
+    email = wtforms.StringField("email", validators=[length(min=3, max=255)])
+    full_name = wtforms.StringField("full_name", validators=[length(max=255), DataRequired()])
+    password = wtforms.StringField("password", validators=[length(min=3)])
+    username = wtforms.StringField("username", validators=[DataRequired()])
+    submit = wtforms.SubmitField("سجل")
+
+
 
 
 class SimpleForm(FlaskForm):

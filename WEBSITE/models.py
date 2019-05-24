@@ -45,7 +45,6 @@ class User(db.Model, UserMixin):
     email = db.Column(db.String(255), nullable=False)
     username = db.Column(db.String(255), unique=True, nullable=False)
     password = db.Column(db.String(500), nullable=False)
-    # test = db.Column(db.String(1000), nullable=False, default="Test")
     
     def __repr__():
         return f"{self.full_name} / {username}"
