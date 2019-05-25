@@ -3,8 +3,8 @@ from flask_mail import Message as MailMessage
 from WEBSITE import app, db, bcrypt, mail, MAIL_USERNAME
 from WEBSITE.forms import MessageForm, LoginForm, UploadImage, UploadTestimonial, ReplyForm, SimpleForm, UserForm
 from WEBSITE import errors
-from WEBSITE.models import Message, Post, Testimonial, User
-from WEBSITE.utils import save_image, handle_new_visitor, get_visitors_file, save_image_locally, delete_s3_object
+from WEBSITE.models import Message, Post, Testimonial, User, Visitors
+from WEBSITE.utils import save_image, handle_new_visitor, save_image_locally, delete_s3_object
 from flask_login import current_user, login_user, login_required, logout_user
 
 
@@ -79,14 +79,16 @@ def images():
 @login_required
 def admin():
     # get visitors count
-    visitors = 0
-    with open(get_visitors_file(), "r") as visitors_file:
-        visitors = visitors_file.read()
+    # visitors = 0
+    # with open(get_visitors_file(), "r") as visitors_file:
+    #     visitors = visitors_file.read()
+
+    visitors_count = Visitors.query.get(1).count
 
     # get active messages count
     messages = 0
     messages = len(Message.query.filter_by(state="active").all())
-    return render_template('admin.html', visitors=visitors, messages_count=messages)
+    return render_template('admin.html', visitors=visitors_count, messages_count=messages)
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():

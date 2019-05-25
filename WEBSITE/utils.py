@@ -5,6 +5,7 @@ from WEBSITE import app
 from PIL import Image
 import datetime
 import boto3
+from WEBSITE.models import Visitors, db
 
 
 def save_image_locally(image_file, path):
@@ -75,13 +76,20 @@ def handle_new_visitor(response):
 	response.set_cookie("did_visit", "True", expires=expire_date)
 	increase_visitors_counter()
 
-def get_visitors_file():
-	return os.getcwd()+"/WEBSITE/static/visitors.txt"#url_for("static", filename="visitors.txt")
+# def get_visitors_file():
+# 	return os.getcwd()+"/WEBSITE/static/visitors.txt" #url_for("static", filename="visitors.txt")
+
+
 
 def increase_visitors_counter():
-	with open(get_visitors_file(), "r+") as visitors_file:
-		number = int(visitors_file.read())
-		number += 1
-		visitors_file.truncate(0)
-		visitors_file.seek(0)
-		visitors_file.write(str(number))
+
+	visitors = Visitors.query.get(1)
+	visitors.count += 1
+	db.session.commit()
+
+	# with open(get_visitors_file(), "r+") as visitors_file:
+	# 	number = int(visitors_file.read())
+	# 	number += 1
+	# 	visitors_file.truncate(0)
+	# 	visitors_file.seek(0)
+	# 	visitors_file.write(str(number))

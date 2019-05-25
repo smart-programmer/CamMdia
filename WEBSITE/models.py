@@ -45,9 +45,18 @@ class User(db.Model, UserMixin):
     email = db.Column(db.String(255), nullable=False)
     username = db.Column(db.String(255), unique=True, nullable=False)
     password = db.Column(db.String(500), nullable=False)
+    role = db.Column(db.String(40), nullable=False)
     
     def __repr__(self):
-        return f"{self.full_name} / {self.password}"
+        return f"{self.full_name} / {self.role}"
+
+
+class Visitors(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    count =  db.Column(db.Integer, nullable=False)
+
+    def __repr__(self):
+        return f"number of visitors is: {self.count}"
 
 
 
