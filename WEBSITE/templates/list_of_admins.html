@@ -93,6 +93,10 @@
         border-top: 1px solid #e7ebee;
         padding: 12px 8px;
     }
+    
+    a:hover {
+        text-decoration: none;
+    }
 </style>
 {% endblock %} {% block content %}
 <div class="container bootstrap snippet">
@@ -104,51 +108,38 @@
                         <table class="table user-list">
                             <thead>
                                 <tr>
-                                    <th><span>User</span></th>
-                                    <th><span>Username</span></th>
-                                    <th class="text-center"><span>Status</span></th>
-                                    <th><span>Email</span></th>
-                                    <th>&nbsp;</th>
+                                    <th class="text-center"><span>User</span></th>
+                                    <th class="text-center"><span>Username</span></th>
+                                    <th class="text-center"><span>Email</span></th>
+                                    <th class="text-center">Settings</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
                                     {% for user in users %}
-                                    <td>
+                                    <td class="text-center">
                                         <img src="https://bootdey.com/img/Content/user_1.jpg" alt="">
                                         <a href="#" class="user-link">{{ user.full_name }}</a>
                                         <span class="user-subhead">Member</span>
                                     </td>
-                                    <td>{{ user.username }}</td>
-                                    <td class="text-center">
-                                        <span class="label label-default">pending</span>
-                                    </td>
+                                    <td class="text-center">{{ user.username }}</td>
                                     <td>
                                         <a href="#">{{ user.email }}</a>
                                     </td>
-                                    <td style="width: 20%;">
-                                    <form method="POST">
-                                        {{ form.hidden_tag() }}
-                                        
-                                        <button class="table-link blue-button">
-                                            <span class="fa-stack">
-                                                <i class="fa fa-square fa-stack-2x"></i>
-                                                <i class="fa fa-search-plus fa-stack-1x fa-inverse"></i>
-                                            </span>
-                                        </button>
-                                        <button class="table-link yellow-button">
+                                    <td class="text-center" style="width: 20%;">
+
+                                        <a href="#" class="table-link yellow-button">
                                             <span class="fa-stack">
                                                 <i class="fa fa-square fa-stack-2x"></i>
                                                 <i class="fa fa-pencil fa-stack-1x fa-inverse"></i>
                                             </span>
                                         </a>
-                                        <button class="table-link danger red-button">
-                                            <span class="fa-stack">
-                                                <i class="fa fa-square fa-stack-2x"></i>
-                                                <i class="fa fa-trash-o fa-stack-1x fa-inverse"></i>
-                                            </span>
+                                        <form method="POST" style="display: inline-block">
+                                            {{ form.hidden_tag() }}
+                                            <button class="table-link danger red-button" style="font-size: 18px">
+                                            حذف
                                         </button>
-                                    </form>
+                                        </form>
                                     </td>
                                 </tr>
                                 {% endfor %}
