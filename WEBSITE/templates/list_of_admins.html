@@ -120,7 +120,7 @@
                                     <td class="text-center">
                                         <img src="https://bootdey.com/img/Content/user_1.jpg" alt="">
                                         <a href="#" class="user-link">{{ user.full_name }}</a>
-                                        <span class="user-subhead">Member</span>
+                                        <span class="user-subhead">{{ user.role }}</span>
                                     </td>
                                     <td class="text-center">{{ user.username }}</td>
                                     <td>
@@ -128,7 +128,7 @@
                                     </td>
                                     <td class="text-center" style="width: 20%;">
 
-                                        <a href="#" class="table-link yellow-button">
+                                        <a href="{{ url_for('edit_admin', adminID=user.id) }}" class="table-link yellow-button">
                                             <span class="fa-stack">
                                                 <i class="fa fa-square fa-stack-2x"></i>
                                                 <i class="fa fa-pencil fa-stack-1x fa-inverse"></i>
@@ -136,9 +136,9 @@
                                         </a>
                                         <form method="POST" style="display: inline-block">
                                             {{ form.hidden_tag() }}
-                                            <button class="table-link danger red-button" style="font-size: 18px">
-                                            حذف
-                                        </button>
+                                            {{ form.button1(class="table-link danger red-button", style="font-size: 18px", value="حذف") }}
+                                            <input type="hidden" value="{{ user.id }}" name="id">
+                                          
                                         </form>
                                     </td>
                                 </tr>
