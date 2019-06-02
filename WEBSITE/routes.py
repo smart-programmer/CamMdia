@@ -111,7 +111,7 @@ def login():
             return redirect(url_for("login"))
     return render_template('login.html', form=form)
 
-@app.route("/logout")
+@app.route("/admin/logout")
 @login_required
 def logout():
     logout_user()
@@ -358,8 +358,19 @@ def updateTestimonial(id):
 @app.route('/admin/list_of_admins', methods=["GET", "POST"])
 @login_required
 def list_of_admins():
+    if not current_user.role == "MasterAdmin":
+        return redirect(url_for("admin"))
     users = User.query.all()
     form = SimpleForm()
+    if form.validate_on_submit():
+        if request.form.get("button1"):
+            id = request.form.get("id")
+            user = User.query.get(id)
+            db.session.delete(user)
+            db.session.commit()
+            return redirect(url_for("list_of_admins"))
+
+        
     return render_template('list_of_admins.html', users=users, form=form)  
 
 @app.route('/admin/register_admin', methods=["GET", "POST"])
@@ -371,13 +382,15 @@ def register_admin():
         full_name = form.full_name.data
         email = form.email.data
         password = bcrypt.generate_password_hash(form.password.data).decode("utf-8")
+        permission_level = form.permission.data
         
-        user = User(username=username, full_name=full_name, email=email, password=password)
+        user = User(username=username, full_name=full_name, email=email, password=password,
+        role=permission_level)
 
         db.session.add(user)
         db.session.commit()
 
-        return redirect("admin")
+        return redirect(url_for("admin"))
     else:
         form.username.data = ""
         form.full_name.data = ""
@@ -386,9 +399,35 @@ def register_admin():
     return render_template('register_admin.html', form=form)  
 
 
-@app.route('/admin/edit_admin', methods=["GET", "POST"])
+@app.route('/admin/edit_admin/<adminID>', methods=["GET", "POST"])
 @login_required
-def edit_admin():
-    return render_template('edit_admin.html')  
+def edit_admin(adminID):
+    admin = User.query.get(adminID)
+    if current_user.role != "MasterAdmin":
+        return redirect(url_for("admin"))
+    else:
+        if current_user.id != admin.id and admin.role == "MasterAdmin":
+            return redirect(url_for("list_of_admins"))
+
+    form = UserForm()
+    if form.validate_on_submit():
+        admin.username = form.username.data
+        admin.full_name = form.full_name.data
+        admin.email = form.email.data
+        admin.password = bcrypt.generate_password_hash(form.password.data).decode("utf-8")
+        if current_user.role == "MasterAdmin":
+            admin.role = form.permission.data
+        else:
+            admin.role = admin.role
+    
+        db.session.commit()
+
+        return redirect(url_for("admin"))
+    else:
+        form.username.data = admin.username
+        form.full_name.data = admin.full_name
+        form.email.data = admin.email
+
+    return render_template('edit_admin.html', admin=admin, form=form)  
 
     

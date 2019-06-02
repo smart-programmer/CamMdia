@@ -6,12 +6,18 @@ from flask_wtf.file import FileField, FileAllowed
 from wtforms.widgets import TextArea
 
 
+
 subFilters = (
     ("logos", "شعارات"),
     ("brochures", "بروشورات"),
     ("banner", "بنرات"),
     ("visualIdentity", "هوية بصرية"),
     ("folders", "فولدرات"),
+)
+
+permission_levels = (
+    ("MasterAdmin", "مدير مطْلَق"),
+    ("Admin", "مدير")
 )
 
 
@@ -70,6 +76,7 @@ class UserForm(FlaskForm):
     full_name = wtforms.StringField("full_name", validators=[length(max=255), DataRequired()])
     password = wtforms.StringField("password", validators=[length(min=3)])
     username = wtforms.StringField("username", validators=[DataRequired()])
+    permission = SelectField("permission", choices=permission_levels, validators=[DataRequired()])
     submit = wtforms.SubmitField("سجل")
 
 
