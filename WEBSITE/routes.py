@@ -101,7 +101,7 @@ def login():
         username = form.username.data
         user = User.query.filter_by(username=username).first()
         if user:
-            if bcrypt.check_password_hash(user.password, form.password.data):
+            if bcrypt.check_password_hash(user.password, form.password.data.encode("utf-8")):
                 login_user(user, remember=True)
                 next_page = request.args.get("next")
                 return redirect(next_page) if next_page else redirect(url_for("admin"))
